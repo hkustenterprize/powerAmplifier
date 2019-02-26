@@ -31,6 +31,6 @@ void HAL_SDADC_ConvCpltCallback(SDADC_HandleTypeDef *hsdadc)
         for (uint8_t i = 0; i < CURRENT_SAMPLE_AMOUNT; i++){
             currentSum += (int16_t)(currentSamples[i] & 0xFFFF);
         }
-        currentAvg = (-currentSum * 1.0 / CURRENT_SAMPLE_AMOUNT + 0.0) / 3940.2 ;
+        currentAvg = (-currentSum * 1.0 / CURRENT_SAMPLE_AMOUNT + 25.0) / 3885.5 ;
     }
 }

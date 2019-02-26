@@ -913,7 +913,7 @@ LOAD /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-ea
                 0x0000000008000000                g_pfnVectors
                 0x0000000008000188                . = ALIGN (0x4)
 
-.text           0x0000000008000188     0x28d0
+.text           0x0000000008000188     0x28d4
                 0x0000000008000188                . = ALIGN (0x4)
  *(.text)
  .text          0x0000000008000188       0x40 /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
@@ -1190,152 +1190,152 @@ LOAD /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-ea
                 0x00000000080028d0       0x50 build/sampling.o
                 0x00000000080028d0                samplingInit
  .text.HAL_SDADC_ConvCpltCallback
-                0x0000000008002920       0x74 build/sampling.o
+                0x0000000008002920       0x78 build/sampling.o
                 0x0000000008002920                HAL_SDADC_ConvCpltCallback
  .text.Reset_Handler
-                0x0000000008002994       0x50 build/startup_stm32f373xc.o
-                0x0000000008002994                Reset_Handler
+                0x0000000008002998       0x50 build/startup_stm32f373xc.o
+                0x0000000008002998                Reset_Handler
  .text.Default_Handler
-                0x00000000080029e4        0x2 build/startup_stm32f373xc.o
-                0x00000000080029e4                RTC_Alarm_IRQHandler
-                0x00000000080029e4                USB_HP_IRQHandler
-                0x00000000080029e4                PVD_IRQHandler
-                0x00000000080029e4                TAMP_STAMP_IRQHandler
-                0x00000000080029e4                EXTI3_IRQHandler
-                0x00000000080029e4                EXTI0_IRQHandler
-                0x00000000080029e4                I2C2_EV_IRQHandler
-                0x00000000080029e4                FPU_IRQHandler
-                0x00000000080029e4                CAN_TX_IRQHandler
-                0x00000000080029e4                SPI1_IRQHandler
-                0x00000000080029e4                CAN_SCE_IRQHandler
-                0x00000000080029e4                DMA2_Channel2_IRQHandler
-                0x00000000080029e4                DMA1_Channel4_IRQHandler
-                0x00000000080029e4                ADC1_IRQHandler
-                0x00000000080029e4                TIM17_IRQHandler
-                0x00000000080029e4                USART3_IRQHandler
-                0x00000000080029e4                DMA1_Channel7_IRQHandler
-                0x00000000080029e4                TIM4_IRQHandler
-                0x00000000080029e4                DMA2_Channel1_IRQHandler
-                0x00000000080029e4                I2C1_EV_IRQHandler
-                0x00000000080029e4                DMA1_Channel6_IRQHandler
-                0x00000000080029e4                TIM16_IRQHandler
-                0x00000000080029e4                DMA2_Channel4_IRQHandler
-                0x00000000080029e4                TIM3_IRQHandler
-                0x00000000080029e4                RCC_IRQHandler
-                0x00000000080029e4                DMA1_Channel1_IRQHandler
-                0x00000000080029e4                Default_Handler
-                0x00000000080029e4                CEC_IRQHandler
-                0x00000000080029e4                EXTI15_10_IRQHandler
-                0x00000000080029e4                TIM14_IRQHandler
-                0x00000000080029e4                TIM13_IRQHandler
-                0x00000000080029e4                TIM12_IRQHandler
-                0x00000000080029e4                TIM7_IRQHandler
-                0x00000000080029e4                TIM5_IRQHandler
-                0x00000000080029e4                SDADC2_IRQHandler
-                0x00000000080029e4                TIM15_IRQHandler
-                0x00000000080029e4                TIM6_DAC1_IRQHandler
-                0x00000000080029e4                EXTI9_5_IRQHandler
-                0x00000000080029e4                RTC_WKUP_IRQHandler
-                0x00000000080029e4                SPI2_IRQHandler
-                0x00000000080029e4                DMA1_Channel5_IRQHandler
-                0x00000000080029e4                USB_LP_IRQHandler
-                0x00000000080029e4                EXTI4_IRQHandler
-                0x00000000080029e4                COMP1_2_IRQHandler
-                0x00000000080029e4                TIM18_DAC2_IRQHandler
-                0x00000000080029e4                WWDG_IRQHandler
-                0x00000000080029e4                SDADC1_IRQHandler
-                0x00000000080029e4                TIM2_IRQHandler
-                0x00000000080029e4                EXTI1_IRQHandler
-                0x00000000080029e4                SDADC3_IRQHandler
-                0x00000000080029e4                USART2_IRQHandler
-                0x00000000080029e4                TIM19_IRQHandler
-                0x00000000080029e4                I2C2_ER_IRQHandler
-                0x00000000080029e4                DMA1_Channel2_IRQHandler
-                0x00000000080029e4                FLASH_IRQHandler
-                0x00000000080029e4                USART1_IRQHandler
-                0x00000000080029e4                SPI3_IRQHandler
-                0x00000000080029e4                I2C1_ER_IRQHandler
-                0x00000000080029e4                USBWakeUp_IRQHandler
-                0x00000000080029e4                EXTI2_TSC_IRQHandler
- *fill*         0x00000000080029e6        0x2 
+                0x00000000080029e8        0x2 build/startup_stm32f373xc.o
+                0x00000000080029e8                RTC_Alarm_IRQHandler
+                0x00000000080029e8                USB_HP_IRQHandler
+                0x00000000080029e8                PVD_IRQHandler
+                0x00000000080029e8                TAMP_STAMP_IRQHandler
+                0x00000000080029e8                EXTI3_IRQHandler
+                0x00000000080029e8                EXTI0_IRQHandler
+                0x00000000080029e8                I2C2_EV_IRQHandler
+                0x00000000080029e8                FPU_IRQHandler
+                0x00000000080029e8                CAN_TX_IRQHandler
+                0x00000000080029e8                SPI1_IRQHandler
+                0x00000000080029e8                CAN_SCE_IRQHandler
+                0x00000000080029e8                DMA2_Channel2_IRQHandler
+                0x00000000080029e8                DMA1_Channel4_IRQHandler
+                0x00000000080029e8                ADC1_IRQHandler
+                0x00000000080029e8                TIM17_IRQHandler
+                0x00000000080029e8                USART3_IRQHandler
+                0x00000000080029e8                DMA1_Channel7_IRQHandler
+                0x00000000080029e8                TIM4_IRQHandler
+                0x00000000080029e8                DMA2_Channel1_IRQHandler
+                0x00000000080029e8                I2C1_EV_IRQHandler
+                0x00000000080029e8                DMA1_Channel6_IRQHandler
+                0x00000000080029e8                TIM16_IRQHandler
+                0x00000000080029e8                DMA2_Channel4_IRQHandler
+                0x00000000080029e8                TIM3_IRQHandler
+                0x00000000080029e8                RCC_IRQHandler
+                0x00000000080029e8                DMA1_Channel1_IRQHandler
+                0x00000000080029e8                Default_Handler
+                0x00000000080029e8                CEC_IRQHandler
+                0x00000000080029e8                EXTI15_10_IRQHandler
+                0x00000000080029e8                TIM14_IRQHandler
+                0x00000000080029e8                TIM13_IRQHandler
+                0x00000000080029e8                TIM12_IRQHandler
+                0x00000000080029e8                TIM7_IRQHandler
+                0x00000000080029e8                TIM5_IRQHandler
+                0x00000000080029e8                SDADC2_IRQHandler
+                0x00000000080029e8                TIM15_IRQHandler
+                0x00000000080029e8                TIM6_DAC1_IRQHandler
+                0x00000000080029e8                EXTI9_5_IRQHandler
+                0x00000000080029e8                RTC_WKUP_IRQHandler
+                0x00000000080029e8                SPI2_IRQHandler
+                0x00000000080029e8                DMA1_Channel5_IRQHandler
+                0x00000000080029e8                USB_LP_IRQHandler
+                0x00000000080029e8                EXTI4_IRQHandler
+                0x00000000080029e8                COMP1_2_IRQHandler
+                0x00000000080029e8                TIM18_DAC2_IRQHandler
+                0x00000000080029e8                WWDG_IRQHandler
+                0x00000000080029e8                SDADC1_IRQHandler
+                0x00000000080029e8                TIM2_IRQHandler
+                0x00000000080029e8                EXTI1_IRQHandler
+                0x00000000080029e8                SDADC3_IRQHandler
+                0x00000000080029e8                USART2_IRQHandler
+                0x00000000080029e8                TIM19_IRQHandler
+                0x00000000080029e8                I2C2_ER_IRQHandler
+                0x00000000080029e8                DMA1_Channel2_IRQHandler
+                0x00000000080029e8                FLASH_IRQHandler
+                0x00000000080029e8                USART1_IRQHandler
+                0x00000000080029e8                SPI3_IRQHandler
+                0x00000000080029e8                I2C1_ER_IRQHandler
+                0x00000000080029e8                USBWakeUp_IRQHandler
+                0x00000000080029e8                EXTI2_TSC_IRQHandler
+ *fill*         0x00000000080029ea        0x2 
  .text.__libc_init_array
-                0x00000000080029e8       0x48 /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-init.o)
-                0x00000000080029e8                __libc_init_array
- .text.memset   0x0000000008002a30       0x10 /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memset.o)
-                0x0000000008002a30                memset
+                0x00000000080029ec       0x48 /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-init.o)
+                0x00000000080029ec                __libc_init_array
+ .text.memset   0x0000000008002a34       0x10 /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memset.o)
+                0x0000000008002a34                memset
  *(.glue_7)
- .glue_7        0x0000000008002a40        0x0 linker stubs
+ .glue_7        0x0000000008002a44        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x0000000008002a40        0x0 linker stubs
+ .glue_7t       0x0000000008002a44        0x0 linker stubs
  *(.eh_frame)
- .eh_frame      0x0000000008002a40        0x0 /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
+ .eh_frame      0x0000000008002a44        0x0 /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
  *(.init)
- .init          0x0000000008002a40        0x4 /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crti.o
-                0x0000000008002a40                _init
- .init          0x0000000008002a44        0x8 /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtn.o
+ .init          0x0000000008002a44        0x4 /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crti.o
+                0x0000000008002a44                _init
+ .init          0x0000000008002a48        0x8 /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtn.o
  *(.fini)
- .fini          0x0000000008002a4c        0x4 /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crti.o
-                0x0000000008002a4c                _fini
- .fini          0x0000000008002a50        0x8 /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtn.o
-                0x0000000008002a58                . = ALIGN (0x4)
-                0x0000000008002a58                _etext = .
+ .fini          0x0000000008002a50        0x4 /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crti.o
+                0x0000000008002a50                _fini
+ .fini          0x0000000008002a54        0x8 /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtn.o
+                0x0000000008002a5c                . = ALIGN (0x4)
+                0x0000000008002a5c                _etext = .
 
-.vfp11_veneer   0x0000000008002a58        0x0
- .vfp11_veneer  0x0000000008002a58        0x0 linker stubs
+.vfp11_veneer   0x0000000008002a5c        0x0
+ .vfp11_veneer  0x0000000008002a5c        0x0 linker stubs
 
-.v4_bx          0x0000000008002a58        0x0
- .v4_bx         0x0000000008002a58        0x0 linker stubs
+.v4_bx          0x0000000008002a5c        0x0
+ .v4_bx         0x0000000008002a5c        0x0 linker stubs
 
-.iplt           0x0000000008002a58        0x0
- .iplt          0x0000000008002a58        0x0 /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
+.iplt           0x0000000008002a5c        0x0
+ .iplt          0x0000000008002a5c        0x0 /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
 
-.rodata         0x0000000008002a58       0x30
-                0x0000000008002a58                . = ALIGN (0x4)
+.rodata         0x0000000008002a5c       0x30
+                0x0000000008002a5c                . = ALIGN (0x4)
  *(.rodata)
  *(.rodata*)
  .rodata.aPLLMULFactorTable
-                0x0000000008002a58       0x10 build/stm32f3xx_hal_rcc.o
-                0x0000000008002a58                aPLLMULFactorTable
+                0x0000000008002a5c       0x10 build/stm32f3xx_hal_rcc.o
+                0x0000000008002a5c                aPLLMULFactorTable
  .rodata.aPredivFactorTable
-                0x0000000008002a68       0x10 build/stm32f3xx_hal_rcc.o
-                0x0000000008002a68                aPredivFactorTable
+                0x0000000008002a6c       0x10 build/stm32f3xx_hal_rcc.o
+                0x0000000008002a6c                aPredivFactorTable
  .rodata.AHBPrescTable
-                0x0000000008002a78       0x10 build/system_stm32f3xx.o
-                0x0000000008002a78                AHBPrescTable
-                0x0000000008002a88                . = ALIGN (0x4)
+                0x0000000008002a7c       0x10 build/system_stm32f3xx.o
+                0x0000000008002a7c                AHBPrescTable
+                0x0000000008002a8c                . = ALIGN (0x4)
 
-.rel.dyn        0x0000000008002a88        0x0
- .rel.iplt      0x0000000008002a88        0x0 /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
+.rel.dyn        0x0000000008002a8c        0x0
+ .rel.iplt      0x0000000008002a8c        0x0 /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM            0x0000000008002a88        0x0
-                0x0000000008002a88                __exidx_start = .
+.ARM            0x0000000008002a8c        0x0
+                0x0000000008002a8c                __exidx_start = .
  *(.ARM.exidx*)
-                0x0000000008002a88                __exidx_end = .
+                0x0000000008002a8c                __exidx_end = .
 
-.preinit_array  0x0000000008002a88        0x0
-                0x0000000008002a88                PROVIDE (__preinit_array_start = .)
+.preinit_array  0x0000000008002a8c        0x0
+                0x0000000008002a8c                PROVIDE (__preinit_array_start = .)
  *(.preinit_array*)
-                0x0000000008002a88                PROVIDE (__preinit_array_end = .)
+                0x0000000008002a8c                PROVIDE (__preinit_array_end = .)
 
-.init_array     0x0000000008002a88        0x4
-                0x0000000008002a88                PROVIDE (__init_array_start = .)
+.init_array     0x0000000008002a8c        0x4
+                0x0000000008002a8c                PROVIDE (__init_array_start = .)
  *(SORT_BY_NAME(.init_array.*))
  *(.init_array*)
- .init_array    0x0000000008002a88        0x4 /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
-                0x0000000008002a8c                PROVIDE (__init_array_end = .)
+ .init_array    0x0000000008002a8c        0x4 /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
+                0x0000000008002a90                PROVIDE (__init_array_end = .)
 
-.fini_array     0x0000000008002a8c        0x4
+.fini_array     0x0000000008002a90        0x4
                 [!provide]                        PROVIDE (__fini_array_start = .)
  *(SORT_BY_NAME(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x0000000008002a8c        0x4 /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
+ .fini_array    0x0000000008002a90        0x4 /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
                 [!provide]                        PROVIDE (__fini_array_end = .)
-                0x0000000008002a90                _sidata = LOADADDR (.data)
+                0x0000000008002a94                _sidata = LOADADDR (.data)
 
-.data           0x0000000020000000       0x10 load address 0x0000000008002a90
+.data           0x0000000020000000       0x10 load address 0x0000000008002a94
                 0x0000000020000000                . = ALIGN (0x4)
                 0x0000000020000000                _sdata = .
  *(.data)
@@ -1357,11 +1357,11 @@ LOAD /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-ea
  *fill*         0x000000002000000e        0x2 
                 0x0000000020000010                _edata = .
 
-.igot.plt       0x0000000020000010        0x0 load address 0x0000000008002aa0
+.igot.plt       0x0000000020000010        0x0 load address 0x0000000008002aa4
  .igot.plt      0x0000000020000010        0x0 /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-eabi/8.2.1/thumb/v7e-m+fp/hard/crtbegin.o
                 0x0000000020000010                . = ALIGN (0x4)
 
-.bss            0x0000000020000010      0x280 load address 0x0000000008002aa0
+.bss            0x0000000020000010      0x280 load address 0x0000000008002aa4
                 0x0000000020000010                _sbss = .
                 0x0000000020000010                __bss_start__ = _sbss
  *(.bss)
@@ -1393,7 +1393,7 @@ LOAD /home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/bin/../lib/gcc/arm-none-ea
                 0x0000000020000290                __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x0000000020000290      0x600 load address 0x0000000008002aa0
+                0x0000000020000290      0x600 load address 0x0000000008002aa4
                 0x0000000020000290                . = ALIGN (0x8)
                 [!provide]                        PROVIDE (end = .)
                 [!provide]                        PROVIDE (_end = .)

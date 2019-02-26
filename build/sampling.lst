@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccz0k7HO.s 			page 1
+ARM GAS  /tmp/ccIRpbnz.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccz0k7HO.s 			page 1
   40 0002 0F4C     		ldr	r4, .L4
   41 0004 0021     		movs	r1, #0
   42 0006 2046     		mov	r0, r4
-ARM GAS  /tmp/ccz0k7HO.s 			page 2
+ARM GAS  /tmp/ccIRpbnz.s 			page 2
 
 
   43 0008 FFF7FEFF 		bl	HAL_DAC_Start
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccz0k7HO.s 			page 1
   91              		.section	.text.HAL_SDADC_ConvCpltCallback,"ax",%progbits
   92              		.align	1
   93              		.global	HAL_SDADC_ConvCpltCallback
-ARM GAS  /tmp/ccz0k7HO.s 			page 3
+ARM GAS  /tmp/ccIRpbnz.s 			page 3
 
 
   94              		.syntax unified
@@ -155,7 +155,7 @@ ARM GAS  /tmp/ccz0k7HO.s 			page 1
   31:Src/sampling.c ****         for (uint8_t i = 0; i < CURRENT_SAMPLE_AMOUNT; i++){
   32:Src/sampling.c ****             currentSum += (int16_t)(currentSamples[i] & 0xFFFF);
   33:Src/sampling.c ****         }
-  34:Src/sampling.c ****         currentAvg = (-currentSum * 1.0 / CURRENT_SAMPLE_AMOUNT + 0.0) / 3940.2 ;
+  34:Src/sampling.c ****         currentAvg = (-currentSum * 1.0 / CURRENT_SAMPLE_AMOUNT + 25.0) / 3885.5 ;
   35:Src/sampling.c ****     }
   36:Src/sampling.c **** }
  119              		.loc 1 36 1 view .LVU12
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccz0k7HO.s 			page 1
  132              	.L8:
   31:Src/sampling.c ****             currentSum += (int16_t)(currentSamples[i] & 0xFFFF);
  133              		.loc 1 31 9 is_stmt 0 discriminator 1 view .LVU17
-ARM GAS  /tmp/ccz0k7HO.s 			page 4
+ARM GAS  /tmp/ccIRpbnz.s 			page 4
 
 
  134 0010 312B     		cmp	r3, #49
@@ -233,12 +233,12 @@ ARM GAS  /tmp/ccz0k7HO.s 			page 1
   34:Src/sampling.c ****     }
  171              		.loc 1 34 65 view .LVU30
  172 003a 0022     		movs	r2, #0
- 173 003c 0023     		movs	r3, #0
+ 173 003c 0C4B     		ldr	r3, .L13+24
  174 003e FFF7FEFF 		bl	__aeabi_dadd
  175              	.LVL15:
   34:Src/sampling.c ****     }
- 176              		.loc 1 34 72 view .LVU31
-ARM GAS  /tmp/ccz0k7HO.s 			page 5
+ 176              		.loc 1 34 73 view .LVU31
+ARM GAS  /tmp/ccIRpbnz.s 			page 5
 
 
  177 0042 05A3     		adr	r3, .L13
@@ -249,83 +249,84 @@ ARM GAS  /tmp/ccz0k7HO.s 			page 1
  182              	.LVL17:
   34:Src/sampling.c ****     }
  183              		.loc 1 34 20 view .LVU32
- 184 0050 074B     		ldr	r3, .L13+24
+ 184 0050 084B     		ldr	r3, .L13+28
  185 0052 1860     		str	r0, [r3]	@ float
  186              		.loc 1 36 1 view .LVU33
  187 0054 D8E7     		b	.L6
  188              	.L14:
  189 0056 00BF     		.align	3
  190              	.L13:
- 191 0058 66666666 		.word	1717986918
- 192 005c 66C8AE40 		.word	1085196390
+ 191 0058 00000000 		.word	0
+ 192 005c 005BAE40 		.word	1085168384
  193 0060 00000000 		.word	hsdadc3
  194 0064 00000000 		.word	.LANCHOR1
  195 0068 00000000 		.word	currentSamples
  196 006c 00004940 		.word	1078525952
- 197 0070 00000000 		.word	.LANCHOR2
- 198              		.cfi_endproc
- 199              	.LFE127:
- 201              		.global	currentAvg
- 202              		.global	currentSum
- 203              		.comm	currentSamples,200,4
- 204              		.global	dacSample
- 205              		.section	.bss.currentAvg,"aw",%nobits
- 206              		.align	2
- 207              		.set	.LANCHOR2,. + 0
- 210              	currentAvg:
- 211 0000 00000000 		.space	4
- 212              		.section	.bss.currentSum,"aw",%nobits
- 213              		.align	2
- 214              		.set	.LANCHOR1,. + 0
- 217              	currentSum:
- 218 0000 00000000 		.space	4
- 219              		.section	.data.dacSample,"aw"
- 220              		.align	1
- 221              		.set	.LANCHOR0,. + 0
- 224              	dacSample:
- 225 0000 6504     		.short	1125
- 226              		.text
- 227              	.Letext0:
- 228              		.file 2 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/machine/_default_t
- 229              		.file 3 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/sys/_stdint.h"
- 230              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
- 231              		.file 5 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/system_stm32f3xx.h"
- 232              		.file 6 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f373xc.h"
- 233              		.file 7 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f3xx.h"
- 234              		.file 8 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/sys/lock.h"
- 235              		.file 9 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/sys/_types.h"
- 236              		.file 10 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/lib/gcc/arm-none-eabi/8.2.1/include/std
- 237              		.file 11 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/sys/reent.h"
- 238              		.file 12 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_def.h"
- 239              		.file 13 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_dma.h"
-ARM GAS  /tmp/ccz0k7HO.s 			page 6
+ 197 0070 00003940 		.word	1077477376
+ 198 0074 00000000 		.word	.LANCHOR2
+ 199              		.cfi_endproc
+ 200              	.LFE127:
+ 202              		.global	currentAvg
+ 203              		.global	currentSum
+ 204              		.comm	currentSamples,200,4
+ 205              		.global	dacSample
+ 206              		.section	.bss.currentAvg,"aw",%nobits
+ 207              		.align	2
+ 208              		.set	.LANCHOR2,. + 0
+ 211              	currentAvg:
+ 212 0000 00000000 		.space	4
+ 213              		.section	.bss.currentSum,"aw",%nobits
+ 214              		.align	2
+ 215              		.set	.LANCHOR1,. + 0
+ 218              	currentSum:
+ 219 0000 00000000 		.space	4
+ 220              		.section	.data.dacSample,"aw"
+ 221              		.align	1
+ 222              		.set	.LANCHOR0,. + 0
+ 225              	dacSample:
+ 226 0000 6504     		.short	1125
+ 227              		.text
+ 228              	.Letext0:
+ 229              		.file 2 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/machine/_default_t
+ 230              		.file 3 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/sys/_stdint.h"
+ 231              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
+ 232              		.file 5 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/system_stm32f3xx.h"
+ 233              		.file 6 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f373xc.h"
+ 234              		.file 7 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f3xx.h"
+ 235              		.file 8 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/sys/lock.h"
+ 236              		.file 9 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/sys/_types.h"
+ 237              		.file 10 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/lib/gcc/arm-none-eabi/8.2.1/include/std
+ 238              		.file 11 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/sys/reent.h"
+ 239              		.file 12 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_def.h"
+ARM GAS  /tmp/ccIRpbnz.s 			page 6
 
 
- 240              		.file 14 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_can.h"
- 241              		.file 15 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_dac.h"
- 242              		.file 16 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_sdadc.h"
- 243              		.file 17 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h"
- 244              		.file 18 "Inc/can.h"
- 245              		.file 19 "Inc/dac.h"
- 246              		.file 20 "Inc/sdadc.h"
-ARM GAS  /tmp/ccz0k7HO.s 			page 7
+ 240              		.file 13 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_dma.h"
+ 241              		.file 14 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_can.h"
+ 242              		.file 15 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_dac.h"
+ 243              		.file 16 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_sdadc.h"
+ 244              		.file 17 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h"
+ 245              		.file 18 "Inc/can.h"
+ 246              		.file 19 "Inc/dac.h"
+ 247              		.file 20 "Inc/sdadc.h"
+ARM GAS  /tmp/ccIRpbnz.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 sampling.c
-     /tmp/ccz0k7HO.s:18     .text.samplingInit:0000000000000000 $t
-     /tmp/ccz0k7HO.s:26     .text.samplingInit:0000000000000000 samplingInit
-     /tmp/ccz0k7HO.s:80     .text.samplingInit:0000000000000040 $d
+     /tmp/ccIRpbnz.s:18     .text.samplingInit:0000000000000000 $t
+     /tmp/ccIRpbnz.s:26     .text.samplingInit:0000000000000000 samplingInit
+     /tmp/ccIRpbnz.s:80     .text.samplingInit:0000000000000040 $d
                             *COM*:00000000000000c8 currentSamples
-     /tmp/ccz0k7HO.s:92     .text.HAL_SDADC_ConvCpltCallback:0000000000000000 $t
-     /tmp/ccz0k7HO.s:99     .text.HAL_SDADC_ConvCpltCallback:0000000000000000 HAL_SDADC_ConvCpltCallback
-     /tmp/ccz0k7HO.s:191    .text.HAL_SDADC_ConvCpltCallback:0000000000000058 $d
-     /tmp/ccz0k7HO.s:210    .bss.currentAvg:0000000000000000 currentAvg
-     /tmp/ccz0k7HO.s:217    .bss.currentSum:0000000000000000 currentSum
-     /tmp/ccz0k7HO.s:224    .data.dacSample:0000000000000000 dacSample
-     /tmp/ccz0k7HO.s:206    .bss.currentAvg:0000000000000000 $d
-     /tmp/ccz0k7HO.s:213    .bss.currentSum:0000000000000000 $d
-     /tmp/ccz0k7HO.s:220    .data.dacSample:0000000000000000 $d
+     /tmp/ccIRpbnz.s:92     .text.HAL_SDADC_ConvCpltCallback:0000000000000000 $t
+     /tmp/ccIRpbnz.s:99     .text.HAL_SDADC_ConvCpltCallback:0000000000000000 HAL_SDADC_ConvCpltCallback
+     /tmp/ccIRpbnz.s:191    .text.HAL_SDADC_ConvCpltCallback:0000000000000058 $d
+     /tmp/ccIRpbnz.s:211    .bss.currentAvg:0000000000000000 currentAvg
+     /tmp/ccIRpbnz.s:218    .bss.currentSum:0000000000000000 currentSum
+     /tmp/ccIRpbnz.s:225    .data.dacSample:0000000000000000 dacSample
+     /tmp/ccIRpbnz.s:207    .bss.currentAvg:0000000000000000 $d
+     /tmp/ccIRpbnz.s:214    .bss.currentSum:0000000000000000 $d
+     /tmp/ccIRpbnz.s:221    .data.dacSample:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 HAL_DAC_Start
