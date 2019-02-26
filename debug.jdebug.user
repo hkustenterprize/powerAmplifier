@@ -1,0 +1,32 @@
+GraphedExpression="currentAvg"
+OpenDocument="main.c", FilePath="C:/GCC_STM/singlePowerAmp/Src/main.c", Line=0
+OpenDocument="stm32f3xx_it.c", FilePath="C:/GCC_STM/singlePowerAmp/Src/stm32f3xx_it.c", Line=96
+OpenDocument="stm32f3xx_hal_rcc.c", FilePath="C:/GCC_STM/singlePowerAmp/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rcc.c", Line=748
+OpenDocument="stm32f3xx_hal_sdadc.c", FilePath="C:/GCC_STM/singlePowerAmp/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_sdadc.c", Line=2182
+OpenDocument="stm32f3xx_hal_dma.c", FilePath="C:/GCC_STM/singlePowerAmp/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_dma.c", Line=620
+OpenDocument="stm32f3xx_hal_dac_ex.c", FilePath="C:/GCC_STM/singlePowerAmp/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_dac_ex.c", Line=130
+OpenDocument="startup_stm32f373xc.s", FilePath="C:/GCC_STM/singlePowerAmp/startup_stm32f373xc.s", Line=62
+OpenDocument="sampling.c", FilePath="C:/GCC_STM/singlePowerAmp/Src/sampling.c", Line=0
+OpenDocument="system_stm32f3xx.c", FilePath="C:/GCC_STM/singlePowerAmp/Src/system_stm32f3xx.c", Line=189
+OpenToolbar="Debug", Floating=0, x=0, y=0
+OpenWindow="Source Files", DockArea=LEFT, x=0, y=1, w=738, h=330, FilterBarShown=1
+OpenWindow="Disassembly", DockArea=RIGHT, x=0, y=0, w=669, h=302, FilterBarShown=0, ExecCountersShown=0
+OpenWindow="Source", x=0, y=0, w=0, h=0, FilterBarShown=0, ExecCountersShown=0
+OpenWindow="Break & Tracepoints", DockArea=LEFT, x=0, y=0, w=738, h=331, FilterBarShown=0
+OpenWindow="Global Data", DockArea=RIGHT, x=0, y=0, w=669, h=302, FilterBarShown=1
+OpenWindow="Watched Data", DockArea=RIGHT, x=0, y=1, w=669, h=669, FilterBarShown=0
+OpenWindow="Functions", DockArea=LEFT, x=0, y=2, w=738, h=331, FilterBarShown=1
+OpenWindow="Data Graph", DockArea=BOTTOM, x=1, y=0, w=1581, h=468, FilterBarShown=0, VisibleTab=0, SamplingFreq=100 Hz, ClearEvent=RESUME
+OpenWindow="Console", DockArea=BOTTOM, x=0, y=0, w=1298, h=468, FilterBarShown=0
+TableHeader="Global Data", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Value";"Location";"Size";"Type"], ColWidths=[148;84;84;45;308]
+TableHeader="Watched Data", SortCol="Expression", SortOrder="ASCENDING", VisibleCols=["Expression";"Value";"Location";"Size";"Refresh";"Type"], ColWidths=[214;189;150;65;82;274]
+TableHeader="Break & Tracepoints", SortCol="None", SortOrder="ASCENDING", VisibleCols=["";"Type";"Location";"Extras"], ColWidths=[38;71;97;532]
+TableHeader="Functions", SortCol="Name", SortOrder="ASCENDING", VisibleCols=["Name";"Address";"Size";"#Insts";"Source"], ColWidths=[145;101;66;84;316]
+TableHeader="Source Files", SortCol="File", SortOrder="ASCENDING", VisibleCols=["File";"Status";"Size";"#Insts";"Path"], ColWidths=[230;86;66;84;986]
+TableHeader="DataGraphSamples", SortCol="Index", SortOrder="ASCENDING", VisibleCols=["Index";"Time                    ";" currentAvg"], ColWidths=[114;71;282]
+TableHeader="Data Graph", SortCol="Expression", SortOrder="DESCENDING", VisibleCols=["Expression";"Type";"Value";"Min";"Max";"Average";"# Changes";"Min. Change";"Max. Change"], ColWidths=[114;71;274;274;254;124;115;134;221]
+TableHeader="tableWidgetSamples", SortCol="Index", SortOrder="ASCENDING", VisibleCols=["Index";"Time";"Channel 0"], ColWidths=[108;153;162]
+WatchedExpression="dacSample", RefreshRate=5, DisplayFormat=DISPLAY_FORMAT_DEC
+WatchedExpression="currentAvg", RefreshRate=5
+WatchedExpression="currentSamples"
+WatchedExpression="hsdadc3"

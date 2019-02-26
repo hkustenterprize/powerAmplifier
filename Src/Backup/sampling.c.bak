@@ -1,0 +1,36 @@
+#include "main.h"
+#include "can.h"
+#include "dac.h"
+#include "dma.h"
+#include "sdadc.h"
+#include "gpio.h"
+#include "sampling.h"
+
+uint16_t dacSample = 1125;
+uint32_t currentSamples[CURRENT_SAMPLE_AMOUNT];
+uint32_t currentSum = 0;
+float currentAvg = 0;
+
+void samplingInit(void) 
+{
+    //HAL_DAC_Start_DMA(&hdac1, DAC_CHANNEL_1, (uint32_t *)&dacSample, 1, DAC_ALIGN_12B_R);
+    HAL_DAC_Start(&hdac1, DAC_CHANNEL_1);
+    HAL_SDADC_CalibrationStart(&hsdadc3, SDADC_CALIBRATION_SEQ_1);
+    HAL_SDADC_PollForCalibEvent(&hsdadc3, HAL_MAX_DELAY);
+    HAL_SDADC_Start_DMA(&hsdadc3, currentSamples, CURRENT_SAMPLE_AMOUNT);
+    while (1)
+    {
+        HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, (uint32_t)dacSample);
+    }
+}
+
+void HAL_SDADC_ConvCpltCallback(SDADC_HandleTypeDef *hsdadc)
+{
+    if (hsdadc == &hsdadc3) {    //current
+        currentSum = 0;
+        for (uint8_t i = 0; i < CURRENT_SAMPLE_AMOUNT; i++){
+            currentSum += (currentSamples[i] & 0xFFFF);
+        }
+        currentAvg = currentSum * 1.0 / CURRENT_SAMPLE_AMOUNT;
+    }
+}

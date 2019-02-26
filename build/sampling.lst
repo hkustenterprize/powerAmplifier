@@ -1,0 +1,342 @@
+ARM GAS  /tmp/ccz0k7HO.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"sampling.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.samplingInit,"ax",%progbits
+  18              		.align	1
+  19              		.global	samplingInit
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	samplingInit:
+  27              	.LFB126:
+  28              		.file 1 "Src/sampling.c"
+   1:Src/sampling.c **** #include "main.h"
+   2:Src/sampling.c **** #include "can.h"
+   3:Src/sampling.c **** #include "dac.h"
+   4:Src/sampling.c **** #include "dma.h"
+   5:Src/sampling.c **** #include "sdadc.h"
+   6:Src/sampling.c **** #include "gpio.h"
+   7:Src/sampling.c **** #include "sampling.h"
+   8:Src/sampling.c **** 
+   9:Src/sampling.c **** uint16_t dacSample = 1125;
+  10:Src/sampling.c **** uint32_t currentSamples[CURRENT_SAMPLE_AMOUNT];
+  11:Src/sampling.c **** int32_t currentSum = 0;
+  12:Src/sampling.c **** float currentAvg = 0;
+  13:Src/sampling.c **** 
+  14:Src/sampling.c **** void samplingInit(void) 
+  15:Src/sampling.c **** {
+  29              		.loc 1 15 1 view -0
+  30              		.cfi_startproc
+  31              		@ Volatile: function does not return.
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34 0000 08B5     		push	{r3, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 3, -8
+  38              		.cfi_offset 14, -4
+  16:Src/sampling.c ****     HAL_DAC_Start(&hdac1, DAC_CHANNEL_1);
+  39              		.loc 1 16 5 view .LVU1
+  40 0002 0F4C     		ldr	r4, .L4
+  41 0004 0021     		movs	r1, #0
+  42 0006 2046     		mov	r0, r4
+ARM GAS  /tmp/ccz0k7HO.s 			page 2
+
+
+  43 0008 FFF7FEFF 		bl	HAL_DAC_Start
+  44              	.LVL0:
+  17:Src/sampling.c ****     HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, (uint32_t)dacSample);
+  45              		.loc 1 17 5 view .LVU2
+  46 000c 0D4B     		ldr	r3, .L4+4
+  47 000e 1B88     		ldrh	r3, [r3]
+  48 0010 0022     		movs	r2, #0
+  49 0012 1146     		mov	r1, r2
+  50 0014 2046     		mov	r0, r4
+  51 0016 FFF7FEFF 		bl	HAL_DAC_SetValue
+  52              	.LVL1:
+  18:Src/sampling.c ****     HAL_SDADC_CalibrationStart(&hsdadc3, SDADC_CALIBRATION_SEQ_1);
+  53              		.loc 1 18 5 view .LVU3
+  54 001a 0B4C     		ldr	r4, .L4+8
+  55 001c 0021     		movs	r1, #0
+  56 001e 2046     		mov	r0, r4
+  57 0020 FFF7FEFF 		bl	HAL_SDADC_CalibrationStart
+  58              	.LVL2:
+  19:Src/sampling.c ****     HAL_SDADC_PollForCalibEvent(&hsdadc3, HAL_MAX_DELAY);
+  59              		.loc 1 19 5 view .LVU4
+  60 0024 4FF0FF31 		mov	r1, #-1
+  61 0028 2046     		mov	r0, r4
+  62 002a FFF7FEFF 		bl	HAL_SDADC_PollForCalibEvent
+  63              	.LVL3:
+  20:Src/sampling.c ****     HAL_SDADC_Start_DMA(&hsdadc3, currentSamples, CURRENT_SAMPLE_AMOUNT);
+  64              		.loc 1 20 5 view .LVU5
+  65 002e 3222     		movs	r2, #50
+  66 0030 0649     		ldr	r1, .L4+12
+  67 0032 2046     		mov	r0, r4
+  68 0034 FFF7FEFF 		bl	HAL_SDADC_Start_DMA
+  69              	.LVL4:
+  70              	.L2:
+  21:Src/sampling.c ****     while (1)
+  71              		.loc 1 21 5 discriminator 1 view .LVU6
+  22:Src/sampling.c ****     {
+  23:Src/sampling.c ****         HAL_Delay(10);
+  72              		.loc 1 23 9 discriminator 1 view .LVU7
+  73 0038 0A20     		movs	r0, #10
+  74 003a FFF7FEFF 		bl	HAL_Delay
+  75              	.LVL5:
+  76 003e FBE7     		b	.L2
+  77              	.L5:
+  78              		.align	2
+  79              	.L4:
+  80 0040 00000000 		.word	hdac1
+  81 0044 00000000 		.word	.LANCHOR0
+  82 0048 00000000 		.word	hsdadc3
+  83 004c 00000000 		.word	currentSamples
+  84              		.cfi_endproc
+  85              	.LFE126:
+  87              		.global	__aeabi_i2d
+  88              		.global	__aeabi_ddiv
+  89              		.global	__aeabi_dadd
+  90              		.global	__aeabi_d2f
+  91              		.section	.text.HAL_SDADC_ConvCpltCallback,"ax",%progbits
+  92              		.align	1
+  93              		.global	HAL_SDADC_ConvCpltCallback
+ARM GAS  /tmp/ccz0k7HO.s 			page 3
+
+
+  94              		.syntax unified
+  95              		.thumb
+  96              		.thumb_func
+  97              		.fpu fpv4-sp-d16
+  99              	HAL_SDADC_ConvCpltCallback:
+ 100              	.LVL6:
+ 101              	.LFB127:
+  24:Src/sampling.c ****     }
+  25:Src/sampling.c **** }
+  26:Src/sampling.c **** 
+  27:Src/sampling.c **** void HAL_SDADC_ConvCpltCallback(SDADC_HandleTypeDef *hsdadc)
+  28:Src/sampling.c **** {
+ 102              		.loc 1 28 1 view -0
+ 103              		.cfi_startproc
+ 104              		@ args = 0, pretend = 0, frame = 0
+ 105              		@ frame_needed = 0, uses_anonymous_args = 0
+ 106              		.loc 1 28 1 is_stmt 0 view .LVU9
+ 107 0000 08B5     		push	{r3, lr}
+ 108              	.LCFI1:
+ 109              		.cfi_def_cfa_offset 8
+ 110              		.cfi_offset 3, -8
+ 111              		.cfi_offset 14, -4
+  29:Src/sampling.c ****     if (hsdadc == &hsdadc3) {    //current
+ 112              		.loc 1 29 5 is_stmt 1 view .LVU10
+ 113              		.loc 1 29 8 is_stmt 0 view .LVU11
+ 114 0002 174B     		ldr	r3, .L13+8
+ 115 0004 8342     		cmp	r3, r0
+ 116 0006 00D0     		beq	.L11
+ 117              	.LVL7:
+ 118              	.L6:
+  30:Src/sampling.c ****         currentSum = 0;
+  31:Src/sampling.c ****         for (uint8_t i = 0; i < CURRENT_SAMPLE_AMOUNT; i++){
+  32:Src/sampling.c ****             currentSum += (int16_t)(currentSamples[i] & 0xFFFF);
+  33:Src/sampling.c ****         }
+  34:Src/sampling.c ****         currentAvg = (-currentSum * 1.0 / CURRENT_SAMPLE_AMOUNT + 0.0) / 3940.2 ;
+  35:Src/sampling.c ****     }
+  36:Src/sampling.c **** }
+ 119              		.loc 1 36 1 view .LVU12
+ 120 0008 08BD     		pop	{r3, pc}
+ 121              	.LVL8:
+ 122              	.L11:
+  30:Src/sampling.c ****         currentSum = 0;
+ 123              		.loc 1 30 9 is_stmt 1 view .LVU13
+  30:Src/sampling.c ****         currentSum = 0;
+ 124              		.loc 1 30 20 is_stmt 0 view .LVU14
+ 125 000a 0023     		movs	r3, #0
+ 126 000c 154A     		ldr	r2, .L13+12
+ 127 000e 1360     		str	r3, [r2]
+  31:Src/sampling.c ****             currentSum += (int16_t)(currentSamples[i] & 0xFFFF);
+ 128              		.loc 1 31 9 is_stmt 1 view .LVU15
+ 129              	.LBB2:
+  31:Src/sampling.c ****             currentSum += (int16_t)(currentSamples[i] & 0xFFFF);
+ 130              		.loc 1 31 14 view .LVU16
+ 131              	.LVL9:
+ 132              	.L8:
+  31:Src/sampling.c ****             currentSum += (int16_t)(currentSamples[i] & 0xFFFF);
+ 133              		.loc 1 31 9 is_stmt 0 discriminator 1 view .LVU17
+ARM GAS  /tmp/ccz0k7HO.s 			page 4
+
+
+ 134 0010 312B     		cmp	r3, #49
+ 135 0012 09D8     		bhi	.L12
+  32:Src/sampling.c ****         }
+ 136              		.loc 1 32 13 is_stmt 1 discriminator 3 view .LVU18
+  32:Src/sampling.c ****         }
+ 137              		.loc 1 32 27 is_stmt 0 discriminator 3 view .LVU19
+ 138 0014 144A     		ldr	r2, .L13+16
+ 139 0016 32F92300 		ldrsh	r0, [r2, r3, lsl #2]
+  32:Src/sampling.c ****         }
+ 140              		.loc 1 32 24 discriminator 3 view .LVU20
+ 141 001a 1249     		ldr	r1, .L13+12
+ 142 001c 0A68     		ldr	r2, [r1]
+ 143 001e 0244     		add	r2, r2, r0
+ 144 0020 0A60     		str	r2, [r1]
+  31:Src/sampling.c ****             currentSum += (int16_t)(currentSamples[i] & 0xFFFF);
+ 145              		.loc 1 31 57 discriminator 3 view .LVU21
+ 146 0022 0133     		adds	r3, r3, #1
+ 147              	.LVL10:
+  31:Src/sampling.c ****             currentSum += (int16_t)(currentSamples[i] & 0xFFFF);
+ 148              		.loc 1 31 57 discriminator 3 view .LVU22
+ 149 0024 DBB2     		uxtb	r3, r3
+ 150              	.LVL11:
+  31:Src/sampling.c ****             currentSum += (int16_t)(currentSamples[i] & 0xFFFF);
+ 151              		.loc 1 31 57 discriminator 3 view .LVU23
+ 152 0026 F3E7     		b	.L8
+ 153              	.L12:
+  31:Src/sampling.c ****             currentSum += (int16_t)(currentSamples[i] & 0xFFFF);
+ 154              		.loc 1 31 57 discriminator 3 view .LVU24
+ 155              	.LBE2:
+  34:Src/sampling.c ****     }
+ 156              		.loc 1 34 9 is_stmt 1 view .LVU25
+  34:Src/sampling.c ****     }
+ 157              		.loc 1 34 23 is_stmt 0 view .LVU26
+ 158 0028 0E4B     		ldr	r3, .L13+12
+ 159              	.LVL12:
+  34:Src/sampling.c ****     }
+ 160              		.loc 1 34 23 view .LVU27
+ 161 002a 1868     		ldr	r0, [r3]
+  34:Src/sampling.c ****     }
+ 162              		.loc 1 34 35 view .LVU28
+ 163 002c 4042     		rsbs	r0, r0, #0
+ 164 002e FFF7FEFF 		bl	__aeabi_i2d
+ 165              	.LVL13:
+  34:Src/sampling.c ****     }
+ 166              		.loc 1 34 41 view .LVU29
+ 167 0032 0022     		movs	r2, #0
+ 168 0034 0D4B     		ldr	r3, .L13+20
+ 169 0036 FFF7FEFF 		bl	__aeabi_ddiv
+ 170              	.LVL14:
+  34:Src/sampling.c ****     }
+ 171              		.loc 1 34 65 view .LVU30
+ 172 003a 0022     		movs	r2, #0
+ 173 003c 0023     		movs	r3, #0
+ 174 003e FFF7FEFF 		bl	__aeabi_dadd
+ 175              	.LVL15:
+  34:Src/sampling.c ****     }
+ 176              		.loc 1 34 72 view .LVU31
+ARM GAS  /tmp/ccz0k7HO.s 			page 5
+
+
+ 177 0042 05A3     		adr	r3, .L13
+ 178 0044 D3E90023 		ldrd	r2, [r3]
+ 179 0048 FFF7FEFF 		bl	__aeabi_ddiv
+ 180              	.LVL16:
+ 181 004c FFF7FEFF 		bl	__aeabi_d2f
+ 182              	.LVL17:
+  34:Src/sampling.c ****     }
+ 183              		.loc 1 34 20 view .LVU32
+ 184 0050 074B     		ldr	r3, .L13+24
+ 185 0052 1860     		str	r0, [r3]	@ float
+ 186              		.loc 1 36 1 view .LVU33
+ 187 0054 D8E7     		b	.L6
+ 188              	.L14:
+ 189 0056 00BF     		.align	3
+ 190              	.L13:
+ 191 0058 66666666 		.word	1717986918
+ 192 005c 66C8AE40 		.word	1085196390
+ 193 0060 00000000 		.word	hsdadc3
+ 194 0064 00000000 		.word	.LANCHOR1
+ 195 0068 00000000 		.word	currentSamples
+ 196 006c 00004940 		.word	1078525952
+ 197 0070 00000000 		.word	.LANCHOR2
+ 198              		.cfi_endproc
+ 199              	.LFE127:
+ 201              		.global	currentAvg
+ 202              		.global	currentSum
+ 203              		.comm	currentSamples,200,4
+ 204              		.global	dacSample
+ 205              		.section	.bss.currentAvg,"aw",%nobits
+ 206              		.align	2
+ 207              		.set	.LANCHOR2,. + 0
+ 210              	currentAvg:
+ 211 0000 00000000 		.space	4
+ 212              		.section	.bss.currentSum,"aw",%nobits
+ 213              		.align	2
+ 214              		.set	.LANCHOR1,. + 0
+ 217              	currentSum:
+ 218 0000 00000000 		.space	4
+ 219              		.section	.data.dacSample,"aw"
+ 220              		.align	1
+ 221              		.set	.LANCHOR0,. + 0
+ 224              	dacSample:
+ 225 0000 6504     		.short	1125
+ 226              		.text
+ 227              	.Letext0:
+ 228              		.file 2 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/machine/_default_t
+ 229              		.file 3 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/sys/_stdint.h"
+ 230              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
+ 231              		.file 5 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/system_stm32f3xx.h"
+ 232              		.file 6 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f373xc.h"
+ 233              		.file 7 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f3xx.h"
+ 234              		.file 8 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/sys/lock.h"
+ 235              		.file 9 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/sys/_types.h"
+ 236              		.file 10 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/lib/gcc/arm-none-eabi/8.2.1/include/std
+ 237              		.file 11 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/sys/reent.h"
+ 238              		.file 12 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_def.h"
+ 239              		.file 13 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_dma.h"
+ARM GAS  /tmp/ccz0k7HO.s 			page 6
+
+
+ 240              		.file 14 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_can.h"
+ 241              		.file 15 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_dac.h"
+ 242              		.file 16 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_sdadc.h"
+ 243              		.file 17 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h"
+ 244              		.file 18 "Inc/can.h"
+ 245              		.file 19 "Inc/dac.h"
+ 246              		.file 20 "Inc/sdadc.h"
+ARM GAS  /tmp/ccz0k7HO.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 sampling.c
+     /tmp/ccz0k7HO.s:18     .text.samplingInit:0000000000000000 $t
+     /tmp/ccz0k7HO.s:26     .text.samplingInit:0000000000000000 samplingInit
+     /tmp/ccz0k7HO.s:80     .text.samplingInit:0000000000000040 $d
+                            *COM*:00000000000000c8 currentSamples
+     /tmp/ccz0k7HO.s:92     .text.HAL_SDADC_ConvCpltCallback:0000000000000000 $t
+     /tmp/ccz0k7HO.s:99     .text.HAL_SDADC_ConvCpltCallback:0000000000000000 HAL_SDADC_ConvCpltCallback
+     /tmp/ccz0k7HO.s:191    .text.HAL_SDADC_ConvCpltCallback:0000000000000058 $d
+     /tmp/ccz0k7HO.s:210    .bss.currentAvg:0000000000000000 currentAvg
+     /tmp/ccz0k7HO.s:217    .bss.currentSum:0000000000000000 currentSum
+     /tmp/ccz0k7HO.s:224    .data.dacSample:0000000000000000 dacSample
+     /tmp/ccz0k7HO.s:206    .bss.currentAvg:0000000000000000 $d
+     /tmp/ccz0k7HO.s:213    .bss.currentSum:0000000000000000 $d
+     /tmp/ccz0k7HO.s:220    .data.dacSample:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+HAL_DAC_Start
+HAL_DAC_SetValue
+HAL_SDADC_CalibrationStart
+HAL_SDADC_PollForCalibEvent
+HAL_SDADC_Start_DMA
+HAL_Delay
+hdac1
+hsdadc3
+__aeabi_i2d
+__aeabi_ddiv
+__aeabi_dadd
+__aeabi_d2f
