@@ -18,9 +18,7 @@ void OnProjectLoad (void) {
   Project.SetTIFSpeed ("50 MHz");
   Project.AddSvdFile ("$(InstallDir)/Config/CPU/Cortex-M4F.svd");
   Project.AddPathSubstitute("/mnt/c/", "C:/");
-  Project.AddPathSubstitute ("/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/", "C:/Program Files (x86)/GNU Tools ARM Embedded/8 2018-q4-major/");
-  Project.AddPathSubstitute ("C:/GCC_STM/singlePowerAmp", "$(ProjectDir)");
-  Project.AddPathSubstitute ("c:/gcc_stm/singlepoweramp", "$(ProjectDir)");
+  Project.SetOSPlugin("FreeRTOSPlugin");
   //
   // User settings
   //

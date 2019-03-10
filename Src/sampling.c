@@ -19,9 +19,6 @@ void SamplingStart(void)
     HAL_SDADC_CalibrationStart(&hsdadc3, SDADC_CALIBRATION_SEQ_1);
     HAL_SDADC_PollForCalibEvent(&hsdadc3, HAL_MAX_DELAY);
     HAL_SDADC_Start_DMA(&hsdadc3, currentSamples, CURRENT_SAMPLE_AMOUNT);
-    while (1)
-    {
-    }
 }
 
 void HAL_SDADC_ConvCpltCallback(SDADC_HandleTypeDef *hsdadc)
