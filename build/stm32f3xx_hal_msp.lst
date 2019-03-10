@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccjrhCGj.s 			page 1
+ARM GAS  C:\Users\acw\AppData\Local\Temp\cc0bhQLg.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -20,14 +20,13 @@ ARM GAS  /tmp/ccjrhCGj.s 			page 1
   17              		.section	.text.HAL_MspInit,"ax",%progbits
   18              		.align	1
   19              		.global	HAL_MspInit
-  20              		.arch armv7e-m
-  21              		.syntax unified
-  22              		.thumb
-  23              		.thumb_func
-  24              		.fpu fpv4-sp-d16
-  26              	HAL_MspInit:
-  27              	.LFB126:
-  28              		.file 1 "Src/stm32f3xx_hal_msp.c"
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	HAL_MspInit:
+  26              	.LFB126:
+  27              		.file 1 "Src/stm32f3xx_hal_msp.c"
    1:Src/stm32f3xx_hal_msp.c **** /* USER CODE BEGIN Header */
    2:Src/stm32f3xx_hal_msp.c **** /**
    3:Src/stm32f3xx_hal_msp.c ****   ******************************************************************************
@@ -58,10 +57,10 @@ ARM GAS  /tmp/ccjrhCGj.s 			page 1
   28:Src/stm32f3xx_hal_msp.c ****   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
   29:Src/stm32f3xx_hal_msp.c ****   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
   30:Src/stm32f3xx_hal_msp.c ****   * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-ARM GAS  /tmp/ccjrhCGj.s 			page 2
-
-
   31:Src/stm32f3xx_hal_msp.c ****   * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ARM GAS  C:\Users\acw\AppData\Local\Temp\cc0bhQLg.s 			page 2
+
+
   32:Src/stm32f3xx_hal_msp.c ****   * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
   33:Src/stm32f3xx_hal_msp.c ****   * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
   34:Src/stm32f3xx_hal_msp.c ****   * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
@@ -116,93 +115,98 @@ ARM GAS  /tmp/ccjrhCGj.s 			page 1
   83:Src/stm32f3xx_hal_msp.c ****   */
   84:Src/stm32f3xx_hal_msp.c **** void HAL_MspInit(void)
   85:Src/stm32f3xx_hal_msp.c **** {
-  29              		.loc 1 85 1 view -0
-  30              		.cfi_startproc
-ARM GAS  /tmp/ccjrhCGj.s 			page 3
+  28              		.loc 1 85 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+ARM GAS  C:\Users\acw\AppData\Local\Temp\cc0bhQLg.s 			page 3
 
 
-  31              		@ args = 0, pretend = 0, frame = 8
-  32              		@ frame_needed = 0, uses_anonymous_args = 0
-  33              		@ link register save eliminated.
-  34 0000 82B0     		sub	sp, sp, #8
-  35              	.LCFI0:
-  36              		.cfi_def_cfa_offset 8
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 00B5     		push	{lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 4
+  35              		.cfi_offset 14, -4
+  36 0002 83B0     		sub	sp, sp, #12
+  37              	.LCFI1:
+  38              		.cfi_def_cfa_offset 16
+  39              	.LBB2:
   86:Src/stm32f3xx_hal_msp.c ****   /* USER CODE BEGIN MspInit 0 */
   87:Src/stm32f3xx_hal_msp.c **** 
   88:Src/stm32f3xx_hal_msp.c ****   /* USER CODE END MspInit 0 */
   89:Src/stm32f3xx_hal_msp.c **** 
   90:Src/stm32f3xx_hal_msp.c ****   __HAL_RCC_SYSCFG_CLK_ENABLE();
-  37              		.loc 1 90 3 view .LVU1
-  38              	.LBB2:
-  39              		.loc 1 90 3 view .LVU2
-  40              		.loc 1 90 3 view .LVU3
-  41 0002 0A4B     		ldr	r3, .L3
-  42 0004 9A69     		ldr	r2, [r3, #24]
-  43 0006 42F00102 		orr	r2, r2, #1
-  44 000a 9A61     		str	r2, [r3, #24]
-  45              		.loc 1 90 3 view .LVU4
-  46 000c 9A69     		ldr	r2, [r3, #24]
-  47 000e 02F00102 		and	r2, r2, #1
-  48 0012 0092     		str	r2, [sp]
-  49              		.loc 1 90 3 view .LVU5
-  50 0014 009A     		ldr	r2, [sp]
-  51              	.LBE2:
+  40              		.loc 1 90 0
+  41 0004 0D4B     		ldr	r3, .L3
+  42 0006 9A69     		ldr	r2, [r3, #24]
+  43 0008 42F00102 		orr	r2, r2, #1
+  44 000c 9A61     		str	r2, [r3, #24]
+  45 000e 9A69     		ldr	r2, [r3, #24]
+  46 0010 02F00102 		and	r2, r2, #1
+  47 0014 0092     		str	r2, [sp]
+  48 0016 009A     		ldr	r2, [sp]
+  49              	.LBE2:
+  50              	.LBB3:
   91:Src/stm32f3xx_hal_msp.c ****   __HAL_RCC_PWR_CLK_ENABLE();
-  52              		.loc 1 91 3 view .LVU6
-  53              	.LBB3:
-  54              		.loc 1 91 3 view .LVU7
-  55              		.loc 1 91 3 view .LVU8
-  56 0016 DA69     		ldr	r2, [r3, #28]
-  57 0018 42F08052 		orr	r2, r2, #268435456
-  58 001c DA61     		str	r2, [r3, #28]
-  59              		.loc 1 91 3 view .LVU9
-  60 001e DB69     		ldr	r3, [r3, #28]
-  61 0020 03F08053 		and	r3, r3, #268435456
-  62 0024 0193     		str	r3, [sp, #4]
-  63              		.loc 1 91 3 view .LVU10
-  64 0026 019B     		ldr	r3, [sp, #4]
-  65              	.LBE3:
+  51              		.loc 1 91 0
+  52 0018 DA69     		ldr	r2, [r3, #28]
+  53 001a 42F08052 		orr	r2, r2, #268435456
+  54 001e DA61     		str	r2, [r3, #28]
+  55 0020 DB69     		ldr	r3, [r3, #28]
+  56 0022 03F08053 		and	r3, r3, #268435456
+  57 0026 0193     		str	r3, [sp, #4]
+  58 0028 019B     		ldr	r3, [sp, #4]
+  59              	.LBE3:
   92:Src/stm32f3xx_hal_msp.c **** 
   93:Src/stm32f3xx_hal_msp.c ****   /* System interrupt init*/
-  94:Src/stm32f3xx_hal_msp.c **** 
-  95:Src/stm32f3xx_hal_msp.c ****   /* USER CODE BEGIN MspInit 1 */
+  94:Src/stm32f3xx_hal_msp.c ****   /* PendSV_IRQn interrupt configuration */
+  95:Src/stm32f3xx_hal_msp.c ****   HAL_NVIC_SetPriority(PendSV_IRQn, 15, 0);
+  60              		.loc 1 95 0
+  61 002a 0022     		movs	r2, #0
+  62 002c 0F21     		movs	r1, #15
+  63 002e 6FF00100 		mvn	r0, #1
+  64 0032 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+  65              	.LVL0:
   96:Src/stm32f3xx_hal_msp.c **** 
-  97:Src/stm32f3xx_hal_msp.c ****   /* USER CODE END MspInit 1 */
-  98:Src/stm32f3xx_hal_msp.c **** }
-  66              		.loc 1 98 1 is_stmt 0 view .LVU11
-  67 0028 02B0     		add	sp, sp, #8
-  68              	.LCFI1:
-  69              		.cfi_def_cfa_offset 0
+  97:Src/stm32f3xx_hal_msp.c ****   /* USER CODE BEGIN MspInit 1 */
+  98:Src/stm32f3xx_hal_msp.c **** 
+  99:Src/stm32f3xx_hal_msp.c ****   /* USER CODE END MspInit 1 */
+ 100:Src/stm32f3xx_hal_msp.c **** }
+  66              		.loc 1 100 0
+  67 0036 03B0     		add	sp, sp, #12
+  68              	.LCFI2:
+  69              		.cfi_def_cfa_offset 4
   70              		@ sp needed
-  71 002a 7047     		bx	lr
+  71 0038 5DF804FB 		ldr	pc, [sp], #4
   72              	.L4:
+ARM GAS  C:\Users\acw\AppData\Local\Temp\cc0bhQLg.s 			page 4
+
+
   73              		.align	2
   74              	.L3:
-ARM GAS  /tmp/ccjrhCGj.s 			page 4
-
-
-  75 002c 00100240 		.word	1073876992
+  75 003c 00100240 		.word	1073876992
   76              		.cfi_endproc
   77              	.LFE126:
   79              		.text
   80              	.Letext0:
-  81              		.file 2 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/machine/_default_t
-  82              		.file 3 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/sys/_stdint.h"
+  81              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include
+  82              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include
   83              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
   84              		.file 5 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/system_stm32f3xx.h"
   85              		.file 6 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f373xc.h"
-  86              		.file 7 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/sys/lock.h"
-  87              		.file 8 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/sys/_types.h"
-  88              		.file 9 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/lib/gcc/arm-none-eabi/8.2.1/include/stdd
-  89              		.file 10 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/sys/reent.h"
+  86              		.file 7 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include
+  87              		.file 8 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include
+  88              		.file 9 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-eab
+  89              		.file 10 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
   90              		.file 11 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h"
-ARM GAS  /tmp/ccjrhCGj.s 			page 5
+  91              		.file 12 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_cortex.h"
+ARM GAS  C:\Users\acw\AppData\Local\Temp\cc0bhQLg.s 			page 5
 
 
 DEFINED SYMBOLS
-                            *ABS*:0000000000000000 stm32f3xx_hal_msp.c
-     /tmp/ccjrhCGj.s:18     .text.HAL_MspInit:0000000000000000 $t
-     /tmp/ccjrhCGj.s:26     .text.HAL_MspInit:0000000000000000 HAL_MspInit
-     /tmp/ccjrhCGj.s:75     .text.HAL_MspInit:000000000000002c $d
+                            *ABS*:00000000 stm32f3xx_hal_msp.c
+C:\Users\acw\AppData\Local\Temp\cc0bhQLg.s:18     .text.HAL_MspInit:00000000 $t
+C:\Users\acw\AppData\Local\Temp\cc0bhQLg.s:25     .text.HAL_MspInit:00000000 HAL_MspInit
+C:\Users\acw\AppData\Local\Temp\cc0bhQLg.s:75     .text.HAL_MspInit:0000003c $d
 
-NO UNDEFINED SYMBOLS
+UNDEFINED SYMBOLS
+HAL_NVIC_SetPriority

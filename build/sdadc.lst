@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cctB8SXg.s 			page 1
+ARM GAS  C:\Users\acw\AppData\Local\Temp\cc56yJZN.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -20,1111 +20,932 @@ ARM GAS  /tmp/cctB8SXg.s 			page 1
   17              		.section	.text.MX_SDADC1_Init,"ax",%progbits
   18              		.align	1
   19              		.global	MX_SDADC1_Init
-  20              		.arch armv7e-m
-  21              		.syntax unified
-  22              		.thumb
-  23              		.thumb_func
-  24              		.fpu fpv4-sp-d16
-  26              	MX_SDADC1_Init:
-  27              	.LFB126:
-  28              		.file 1 "Src/sdadc.c"
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	MX_SDADC1_Init:
+  26              	.LFB126:
+  27              		.file 1 "Src/sdadc.c"
    1:Src/sdadc.c   **** /**
    2:Src/sdadc.c   ****   ******************************************************************************
    3:Src/sdadc.c   ****   * File Name          : SDADC.c
    4:Src/sdadc.c   ****   * Description        : This file provides code for the configuration
    5:Src/sdadc.c   ****   *                      of the SDADC instances.
    6:Src/sdadc.c   ****   ******************************************************************************
-   7:Src/sdadc.c   ****   ** This notice applies to any and all portions of this file
-   8:Src/sdadc.c   ****   * that are not between comment pairs USER CODE BEGIN and
-   9:Src/sdadc.c   ****   * USER CODE END. Other portions of this file, whether 
-  10:Src/sdadc.c   ****   * inserted by the user or by software development tools
-  11:Src/sdadc.c   ****   * are owned by their respective copyright owners.
-  12:Src/sdadc.c   ****   *
-  13:Src/sdadc.c   ****   * COPYRIGHT(c) 2019 STMicroelectronics
-  14:Src/sdadc.c   ****   *
-  15:Src/sdadc.c   ****   * Redistribution and use in source and binary forms, with or without modification,
-  16:Src/sdadc.c   ****   * are permitted provided that the following conditions are met:
-  17:Src/sdadc.c   ****   *   1. Redistributions of source code must retain the above copyright notice,
-  18:Src/sdadc.c   ****   *      this list of conditions and the following disclaimer.
-  19:Src/sdadc.c   ****   *   2. Redistributions in binary form must reproduce the above copyright notice,
-  20:Src/sdadc.c   ****   *      this list of conditions and the following disclaimer in the documentation
-  21:Src/sdadc.c   ****   *      and/or other materials provided with the distribution.
-  22:Src/sdadc.c   ****   *   3. Neither the name of STMicroelectronics nor the names of its contributors
-  23:Src/sdadc.c   ****   *      may be used to endorse or promote products derived from this software
-  24:Src/sdadc.c   ****   *      without specific prior written permission.
-  25:Src/sdadc.c   ****   *
-  26:Src/sdadc.c   ****   * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-  27:Src/sdadc.c   ****   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  28:Src/sdadc.c   ****   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-  29:Src/sdadc.c   ****   * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-  30:Src/sdadc.c   ****   * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-ARM GAS  /tmp/cctB8SXg.s 			page 2
+   7:Src/sdadc.c   ****   * @attention
+   8:Src/sdadc.c   ****   *
+   9:Src/sdadc.c   ****   * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+  10:Src/sdadc.c   ****   * All rights reserved.</center></h2>
+  11:Src/sdadc.c   ****   *
+  12:Src/sdadc.c   ****   * This software component is licensed by ST under Ultimate Liberty license
+  13:Src/sdadc.c   ****   * SLA0044, the "License"; You may not use this file except in compliance with
+  14:Src/sdadc.c   ****   * the License. You may obtain a copy of the License at:
+  15:Src/sdadc.c   ****   *                             www.st.com/SLA0044
+  16:Src/sdadc.c   ****   *
+  17:Src/sdadc.c   ****   ******************************************************************************
+  18:Src/sdadc.c   ****   */
+  19:Src/sdadc.c   **** 
+  20:Src/sdadc.c   **** /* Includes ------------------------------------------------------------------*/
+  21:Src/sdadc.c   **** #include "sdadc.h"
+  22:Src/sdadc.c   **** 
+  23:Src/sdadc.c   **** /* USER CODE BEGIN 0 */
+  24:Src/sdadc.c   **** 
+  25:Src/sdadc.c   **** /* USER CODE END 0 */
+  26:Src/sdadc.c   **** 
+  27:Src/sdadc.c   **** SDADC_HandleTypeDef hsdadc1;
+  28:Src/sdadc.c   **** SDADC_HandleTypeDef hsdadc3;
+  29:Src/sdadc.c   **** DMA_HandleTypeDef hdma_sdadc1;
+  30:Src/sdadc.c   **** DMA_HandleTypeDef hdma_sdadc3;
+  31:Src/sdadc.c   **** 
+ARM GAS  C:\Users\acw\AppData\Local\Temp\cc56yJZN.s 			page 2
 
 
-  31:Src/sdadc.c   ****   * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-  32:Src/sdadc.c   ****   * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-  33:Src/sdadc.c   ****   * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-  34:Src/sdadc.c   ****   * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-  35:Src/sdadc.c   ****   * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-  36:Src/sdadc.c   ****   *
-  37:Src/sdadc.c   ****   ******************************************************************************
-  38:Src/sdadc.c   ****   */
-  39:Src/sdadc.c   **** 
-  40:Src/sdadc.c   **** /* Includes ------------------------------------------------------------------*/
-  41:Src/sdadc.c   **** #include "sdadc.h"
-  42:Src/sdadc.c   **** 
-  43:Src/sdadc.c   **** /* USER CODE BEGIN 0 */
-  44:Src/sdadc.c   **** 
-  45:Src/sdadc.c   **** /* USER CODE END 0 */
-  46:Src/sdadc.c   **** 
-  47:Src/sdadc.c   **** SDADC_HandleTypeDef hsdadc1;
-  48:Src/sdadc.c   **** SDADC_HandleTypeDef hsdadc3;
-  49:Src/sdadc.c   **** DMA_HandleTypeDef hdma_sdadc1;
-  50:Src/sdadc.c   **** DMA_HandleTypeDef hdma_sdadc3;
-  51:Src/sdadc.c   **** 
-  52:Src/sdadc.c   **** /* SDADC1 init function */
-  53:Src/sdadc.c   **** void MX_SDADC1_Init(void)
-  54:Src/sdadc.c   **** {
-  29              		.loc 1 54 1 view -0
-  30              		.cfi_startproc
-  31              		@ args = 0, pretend = 0, frame = 16
-  32              		@ frame_needed = 0, uses_anonymous_args = 0
-  33 0000 00B5     		push	{lr}
-  34              	.LCFI0:
-  35              		.cfi_def_cfa_offset 4
-  36              		.cfi_offset 14, -4
-  37 0002 85B0     		sub	sp, sp, #20
-  38              	.LCFI1:
-  39              		.cfi_def_cfa_offset 24
-  55:Src/sdadc.c   ****   SDADC_ConfParamTypeDef ConfParamStruct = {0};
-  40              		.loc 1 55 3 view .LVU1
-  41              		.loc 1 55 26 is_stmt 0 view .LVU2
-  42 0004 0023     		movs	r3, #0
-  43 0006 0093     		str	r3, [sp]
-  44 0008 0193     		str	r3, [sp, #4]
-  45 000a 0293     		str	r3, [sp, #8]
-  46 000c 0393     		str	r3, [sp, #12]
-  56:Src/sdadc.c   **** 
-  57:Src/sdadc.c   ****   /**Configure the SDADC low power mode, fast conversion mode,
-  58:Src/sdadc.c   ****   slow clock mode and SDADC1 reference voltage 
-  59:Src/sdadc.c   ****   */
-  60:Src/sdadc.c   ****   hsdadc1.Instance = SDADC1;
-  47              		.loc 1 60 3 is_stmt 1 view .LVU3
-  48              		.loc 1 60 20 is_stmt 0 view .LVU4
-  49 000e 1D48     		ldr	r0, .L13
-  50 0010 1D4A     		ldr	r2, .L13+4
-  51 0012 0260     		str	r2, [r0]
-  61:Src/sdadc.c   ****   hsdadc1.Init.IdleLowPowerMode = SDADC_LOWPOWER_NONE;
-  52              		.loc 1 61 3 is_stmt 1 view .LVU5
-  53              		.loc 1 61 33 is_stmt 0 view .LVU6
-  54 0014 4360     		str	r3, [r0, #4]
-ARM GAS  /tmp/cctB8SXg.s 			page 3
+  32:Src/sdadc.c   **** /* SDADC1 init function */
+  33:Src/sdadc.c   **** void MX_SDADC1_Init(void)
+  34:Src/sdadc.c   **** {
+  28              		.loc 1 34 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 16
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 00B5     		push	{lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 4
+  35              		.cfi_offset 14, -4
+  36 0002 85B0     		sub	sp, sp, #20
+  37              	.LCFI1:
+  38              		.cfi_def_cfa_offset 24
+  35:Src/sdadc.c   ****   SDADC_ConfParamTypeDef ConfParamStruct = {0};
+  39              		.loc 1 35 0
+  40 0004 0023     		movs	r3, #0
+  41 0006 0093     		str	r3, [sp]
+  42 0008 0193     		str	r3, [sp, #4]
+  43 000a 0293     		str	r3, [sp, #8]
+  44 000c 0393     		str	r3, [sp, #12]
+  36:Src/sdadc.c   **** 
+  37:Src/sdadc.c   ****   /** Configure the SDADC low power mode, fast conversion mode,
+  38:Src/sdadc.c   ****   slow clock mode and SDADC1 reference voltage 
+  39:Src/sdadc.c   ****   */
+  40:Src/sdadc.c   ****   hsdadc1.Instance = SDADC1;
+  45              		.loc 1 40 0
+  46 000e 1D48     		ldr	r0, .L13
+  47 0010 1D4A     		ldr	r2, .L13+4
+  48 0012 0260     		str	r2, [r0]
+  41:Src/sdadc.c   ****   hsdadc1.Init.IdleLowPowerMode = SDADC_LOWPOWER_NONE;
+  49              		.loc 1 41 0
+  50 0014 4360     		str	r3, [r0, #4]
+  42:Src/sdadc.c   ****   hsdadc1.Init.FastConversionMode = SDADC_FAST_CONV_ENABLE;
+  51              		.loc 1 42 0
+  52 0016 4FF08072 		mov	r2, #16777216
+  53 001a 8260     		str	r2, [r0, #8]
+  43:Src/sdadc.c   ****   hsdadc1.Init.SlowClockMode = SDADC_SLOW_CLOCK_DISABLE;
+  54              		.loc 1 43 0
+  55 001c C360     		str	r3, [r0, #12]
+  44:Src/sdadc.c   ****   hsdadc1.Init.ReferenceVoltage = SDADC_VREF_VREFINT2;
+  56              		.loc 1 44 0
+  57 001e 4FF40073 		mov	r3, #512
+  58 0022 0361     		str	r3, [r0, #16]
+  45:Src/sdadc.c   ****   if (HAL_SDADC_Init(&hsdadc1) != HAL_OK)
+  59              		.loc 1 45 0
+  60 0024 FFF7FEFF 		bl	HAL_SDADC_Init
+  61              	.LVL0:
+  62 0028 E8B9     		cbnz	r0, .L8
+  63              	.L2:
+  46:Src/sdadc.c   ****   {
+  47:Src/sdadc.c   ****     Error_Handler();
+  48:Src/sdadc.c   ****   }
+  49:Src/sdadc.c   ****   /** Configure The Regular Mode 
+  50:Src/sdadc.c   ****   */
+  51:Src/sdadc.c   ****   if (HAL_SDADC_SelectRegularTrigger(&hsdadc1, SDADC_SOFTWARE_TRIGGER) != HAL_OK)
+  64              		.loc 1 51 0
+ARM GAS  C:\Users\acw\AppData\Local\Temp\cc56yJZN.s 			page 3
 
 
-  62:Src/sdadc.c   ****   hsdadc1.Init.FastConversionMode = SDADC_FAST_CONV_ENABLE;
-  55              		.loc 1 62 3 is_stmt 1 view .LVU7
-  56              		.loc 1 62 35 is_stmt 0 view .LVU8
-  57 0016 4FF08072 		mov	r2, #16777216
-  58 001a 8260     		str	r2, [r0, #8]
-  63:Src/sdadc.c   ****   hsdadc1.Init.SlowClockMode = SDADC_SLOW_CLOCK_DISABLE;
-  59              		.loc 1 63 3 is_stmt 1 view .LVU9
-  60              		.loc 1 63 30 is_stmt 0 view .LVU10
-  61 001c C360     		str	r3, [r0, #12]
-  64:Src/sdadc.c   ****   hsdadc1.Init.ReferenceVoltage = SDADC_VREF_VREFINT2;
-  62              		.loc 1 64 3 is_stmt 1 view .LVU11
-  63              		.loc 1 64 33 is_stmt 0 view .LVU12
-  64 001e 4FF40073 		mov	r3, #512
-  65 0022 0361     		str	r3, [r0, #16]
-  65:Src/sdadc.c   ****   if (HAL_SDADC_Init(&hsdadc1) != HAL_OK)
-  66              		.loc 1 65 3 is_stmt 1 view .LVU13
-  67              		.loc 1 65 7 is_stmt 0 view .LVU14
-  68 0024 FFF7FEFF 		bl	HAL_SDADC_Init
-  69              	.LVL0:
-  70              		.loc 1 65 6 view .LVU15
-  71 0028 E8B9     		cbnz	r0, .L8
-  72              	.L2:
-  66:Src/sdadc.c   ****   {
-  67:Src/sdadc.c   ****     Error_Handler();
-  68:Src/sdadc.c   ****   }
-  69:Src/sdadc.c   ****   /**Configure The Regular Mode 
-  70:Src/sdadc.c   ****   */
-  71:Src/sdadc.c   ****   if (HAL_SDADC_SelectRegularTrigger(&hsdadc1, SDADC_SOFTWARE_TRIGGER) != HAL_OK)
-  73              		.loc 1 71 3 is_stmt 1 view .LVU16
-  74              		.loc 1 71 7 is_stmt 0 view .LVU17
-  75 002a 0021     		movs	r1, #0
-  76 002c 1548     		ldr	r0, .L13
-  77 002e FFF7FEFF 		bl	HAL_SDADC_SelectRegularTrigger
-  78              	.LVL1:
-  79              		.loc 1 71 6 view .LVU18
-  80 0032 D8B9     		cbnz	r0, .L9
-  81              	.L3:
+  65 002a 0021     		movs	r1, #0
+  66 002c 1548     		ldr	r0, .L13
+  67 002e FFF7FEFF 		bl	HAL_SDADC_SelectRegularTrigger
+  68              	.LVL1:
+  69 0032 D8B9     		cbnz	r0, .L9
+  70              	.L3:
+  52:Src/sdadc.c   ****   {
+  53:Src/sdadc.c   ****     Error_Handler();
+  54:Src/sdadc.c   ****   }
+  55:Src/sdadc.c   ****   /** Set parameters for SDADC configuration 0 Register 
+  56:Src/sdadc.c   ****   */
+  57:Src/sdadc.c   ****   ConfParamStruct.InputMode = SDADC_INPUT_MODE_DIFF;
+  71              		.loc 1 57 0
+  72 0034 0021     		movs	r1, #0
+  73 0036 0091     		str	r1, [sp]
+  58:Src/sdadc.c   ****   ConfParamStruct.Gain = SDADC_GAIN_1;
+  74              		.loc 1 58 0
+  75 0038 0191     		str	r1, [sp, #4]
+  59:Src/sdadc.c   ****   ConfParamStruct.CommonMode = SDADC_COMMON_MODE_VSSA;
+  76              		.loc 1 59 0
+  77 003a 0291     		str	r1, [sp, #8]
+  60:Src/sdadc.c   ****   ConfParamStruct.Offset = 0;
+  78              		.loc 1 60 0
+  79 003c 0391     		str	r1, [sp, #12]
+  61:Src/sdadc.c   ****   if (HAL_SDADC_PrepareChannelConfig(&hsdadc1, SDADC_CONF_INDEX_0, &ConfParamStruct) != HAL_OK)
+  80              		.loc 1 61 0
+  81 003e 6A46     		mov	r2, sp
+  82 0040 1048     		ldr	r0, .L13
+  83 0042 FFF7FEFF 		bl	HAL_SDADC_PrepareChannelConfig
+  84              	.LVL2:
+  85 0046 A0B9     		cbnz	r0, .L10
+  86              	.L4:
+  62:Src/sdadc.c   ****   {
+  63:Src/sdadc.c   ****     Error_Handler();
+  64:Src/sdadc.c   ****   }
+  65:Src/sdadc.c   ****   /** Configure the Regular Channel 
+  66:Src/sdadc.c   ****   */
+  67:Src/sdadc.c   ****   if (HAL_SDADC_AssociateChannelConfig(&hsdadc1, SDADC_CHANNEL_6, SDADC_CONF_INDEX_0) != HAL_OK)
+  87              		.loc 1 67 0
+  88 0048 0022     		movs	r2, #0
+  89 004a 1049     		ldr	r1, .L13+8
+  90 004c 0D48     		ldr	r0, .L13
+  91 004e FFF7FEFF 		bl	HAL_SDADC_AssociateChannelConfig
+  92              	.LVL3:
+  93 0052 88B9     		cbnz	r0, .L11
+  94              	.L5:
+  68:Src/sdadc.c   ****   {
+  69:Src/sdadc.c   ****     Error_Handler();
+  70:Src/sdadc.c   ****   }
+  71:Src/sdadc.c   ****   if (HAL_SDADC_ConfigChannel(&hsdadc1, SDADC_CHANNEL_6, SDADC_CONTINUOUS_CONV_ON) != HAL_OK)
+  95              		.loc 1 71 0
+  96 0054 0122     		movs	r2, #1
+  97 0056 0D49     		ldr	r1, .L13+8
+  98 0058 0A48     		ldr	r0, .L13
+  99 005a FFF7FEFF 		bl	HAL_SDADC_ConfigChannel
+ 100              	.LVL4:
+ 101 005e 70B9     		cbnz	r0, .L12
+ARM GAS  C:\Users\acw\AppData\Local\Temp\cc56yJZN.s 			page 4
+
+
+ 102              	.L1:
   72:Src/sdadc.c   ****   {
   73:Src/sdadc.c   ****     Error_Handler();
   74:Src/sdadc.c   ****   }
-  75:Src/sdadc.c   ****   /**Set parameters for SDADC configuration 0 Register 
-  76:Src/sdadc.c   ****   */
-  77:Src/sdadc.c   ****   ConfParamStruct.InputMode = SDADC_INPUT_MODE_DIFF;
-  82              		.loc 1 77 3 is_stmt 1 view .LVU19
-  83              		.loc 1 77 29 is_stmt 0 view .LVU20
-  84 0034 0021     		movs	r1, #0
-  85 0036 0091     		str	r1, [sp]
-  78:Src/sdadc.c   ****   ConfParamStruct.Gain = SDADC_GAIN_1;
-  86              		.loc 1 78 3 is_stmt 1 view .LVU21
-  87              		.loc 1 78 24 is_stmt 0 view .LVU22
-  88 0038 0191     		str	r1, [sp, #4]
-  79:Src/sdadc.c   ****   ConfParamStruct.CommonMode = SDADC_COMMON_MODE_VSSA;
-  89              		.loc 1 79 3 is_stmt 1 view .LVU23
-  90              		.loc 1 79 30 is_stmt 0 view .LVU24
-  91 003a 0291     		str	r1, [sp, #8]
-  80:Src/sdadc.c   ****   ConfParamStruct.Offset = 0;
-  92              		.loc 1 80 3 is_stmt 1 view .LVU25
-ARM GAS  /tmp/cctB8SXg.s 			page 4
-
-
-  93              		.loc 1 80 26 is_stmt 0 view .LVU26
-  94 003c 0391     		str	r1, [sp, #12]
-  81:Src/sdadc.c   ****   if (HAL_SDADC_PrepareChannelConfig(&hsdadc1, SDADC_CONF_INDEX_0, &ConfParamStruct) != HAL_OK)
-  95              		.loc 1 81 3 is_stmt 1 view .LVU27
-  96              		.loc 1 81 7 is_stmt 0 view .LVU28
-  97 003e 6A46     		mov	r2, sp
-  98 0040 1048     		ldr	r0, .L13
-  99 0042 FFF7FEFF 		bl	HAL_SDADC_PrepareChannelConfig
- 100              	.LVL2:
- 101              		.loc 1 81 6 view .LVU29
- 102 0046 A0B9     		cbnz	r0, .L10
- 103              	.L4:
-  82:Src/sdadc.c   ****   {
-  83:Src/sdadc.c   ****     Error_Handler();
-  84:Src/sdadc.c   ****   }
-  85:Src/sdadc.c   ****   /**Configure the Regular Channel 
-  86:Src/sdadc.c   ****   */
-  87:Src/sdadc.c   ****   if (HAL_SDADC_AssociateChannelConfig(&hsdadc1, SDADC_CHANNEL_6, SDADC_CONF_INDEX_0) != HAL_OK)
- 104              		.loc 1 87 3 is_stmt 1 view .LVU30
- 105              		.loc 1 87 7 is_stmt 0 view .LVU31
- 106 0048 0022     		movs	r2, #0
- 107 004a 1049     		ldr	r1, .L13+8
- 108 004c 0D48     		ldr	r0, .L13
- 109 004e FFF7FEFF 		bl	HAL_SDADC_AssociateChannelConfig
- 110              	.LVL3:
- 111              		.loc 1 87 6 view .LVU32
- 112 0052 88B9     		cbnz	r0, .L11
- 113              	.L5:
-  88:Src/sdadc.c   ****   {
-  89:Src/sdadc.c   ****     Error_Handler();
-  90:Src/sdadc.c   ****   }
-  91:Src/sdadc.c   ****   if (HAL_SDADC_ConfigChannel(&hsdadc1, SDADC_CHANNEL_6, SDADC_CONTINUOUS_CONV_ON) != HAL_OK)
- 114              		.loc 1 91 3 is_stmt 1 view .LVU33
- 115              		.loc 1 91 7 is_stmt 0 view .LVU34
- 116 0054 0122     		movs	r2, #1
- 117 0056 0D49     		ldr	r1, .L13+8
- 118 0058 0A48     		ldr	r0, .L13
- 119 005a FFF7FEFF 		bl	HAL_SDADC_ConfigChannel
- 120              	.LVL4:
- 121              		.loc 1 91 6 view .LVU35
- 122 005e 70B9     		cbnz	r0, .L12
- 123              	.L1:
-  92:Src/sdadc.c   ****   {
-  93:Src/sdadc.c   ****     Error_Handler();
-  94:Src/sdadc.c   ****   }
-  95:Src/sdadc.c   **** 
-  96:Src/sdadc.c   **** }
- 124              		.loc 1 96 1 view .LVU36
- 125 0060 05B0     		add	sp, sp, #20
- 126              	.LCFI2:
- 127              		.cfi_remember_state
- 128              		.cfi_def_cfa_offset 4
- 129              		@ sp needed
- 130 0062 5DF804FB 		ldr	pc, [sp], #4
- 131              	.L8:
- 132              	.LCFI3:
- 133              		.cfi_restore_state
-ARM GAS  /tmp/cctB8SXg.s 			page 5
-
-
-  67:Src/sdadc.c   ****   }
- 134              		.loc 1 67 5 is_stmt 1 view .LVU37
- 135 0066 FFF7FEFF 		bl	Error_Handler
- 136              	.LVL5:
- 137 006a DEE7     		b	.L2
- 138              	.L9:
+  75:Src/sdadc.c   **** 
+  76:Src/sdadc.c   **** }
+ 103              		.loc 1 76 0
+ 104 0060 05B0     		add	sp, sp, #20
+ 105              	.LCFI2:
+ 106              		.cfi_remember_state
+ 107              		.cfi_def_cfa_offset 4
+ 108              		@ sp needed
+ 109 0062 5DF804FB 		ldr	pc, [sp], #4
+ 110              	.L8:
+ 111              	.LCFI3:
+ 112              		.cfi_restore_state
+  47:Src/sdadc.c   ****   }
+ 113              		.loc 1 47 0
+ 114 0066 FFF7FEFF 		bl	Error_Handler
+ 115              	.LVL5:
+ 116 006a DEE7     		b	.L2
+ 117              	.L9:
+  53:Src/sdadc.c   ****   }
+ 118              		.loc 1 53 0
+ 119 006c FFF7FEFF 		bl	Error_Handler
+ 120              	.LVL6:
+ 121 0070 E0E7     		b	.L3
+ 122              	.L10:
+  63:Src/sdadc.c   ****   }
+ 123              		.loc 1 63 0
+ 124 0072 FFF7FEFF 		bl	Error_Handler
+ 125              	.LVL7:
+ 126 0076 E7E7     		b	.L4
+ 127              	.L11:
+  69:Src/sdadc.c   ****   }
+ 128              		.loc 1 69 0
+ 129 0078 FFF7FEFF 		bl	Error_Handler
+ 130              	.LVL8:
+ 131 007c EAE7     		b	.L5
+ 132              	.L12:
   73:Src/sdadc.c   ****   }
- 139              		.loc 1 73 5 view .LVU38
- 140 006c FFF7FEFF 		bl	Error_Handler
- 141              	.LVL6:
- 142 0070 E0E7     		b	.L3
- 143              	.L10:
-  83:Src/sdadc.c   ****   }
- 144              		.loc 1 83 5 view .LVU39
- 145 0072 FFF7FEFF 		bl	Error_Handler
- 146              	.LVL7:
- 147 0076 E7E7     		b	.L4
- 148              	.L11:
-  89:Src/sdadc.c   ****   }
- 149              		.loc 1 89 5 view .LVU40
- 150 0078 FFF7FEFF 		bl	Error_Handler
- 151              	.LVL8:
- 152 007c EAE7     		b	.L5
- 153              	.L12:
+ 133              		.loc 1 73 0
+ 134 007e FFF7FEFF 		bl	Error_Handler
+ 135              	.LVL9:
+ 136              		.loc 1 76 0
+ 137 0082 EDE7     		b	.L1
+ 138              	.L14:
+ 139              		.align	2
+ 140              	.L13:
+ 141 0084 00000000 		.word	hsdadc1
+ 142 0088 00600140 		.word	1073831936
+ 143 008c 40000600 		.word	393280
+ 144              		.cfi_endproc
+ 145              	.LFE126:
+ 147              		.section	.text.MX_SDADC3_Init,"ax",%progbits
+ 148              		.align	1
+ 149              		.global	MX_SDADC3_Init
+ARM GAS  C:\Users\acw\AppData\Local\Temp\cc56yJZN.s 			page 5
+
+
+ 150              		.syntax unified
+ 151              		.thumb
+ 152              		.thumb_func
+ 153              		.fpu fpv4-sp-d16
+ 155              	MX_SDADC3_Init:
+ 156              	.LFB127:
+  77:Src/sdadc.c   **** /* SDADC3 init function */
+  78:Src/sdadc.c   **** void MX_SDADC3_Init(void)
+  79:Src/sdadc.c   **** {
+ 157              		.loc 1 79 0
+ 158              		.cfi_startproc
+ 159              		@ args = 0, pretend = 0, frame = 16
+ 160              		@ frame_needed = 0, uses_anonymous_args = 0
+ 161 0000 00B5     		push	{lr}
+ 162              	.LCFI4:
+ 163              		.cfi_def_cfa_offset 4
+ 164              		.cfi_offset 14, -4
+ 165 0002 85B0     		sub	sp, sp, #20
+ 166              	.LCFI5:
+ 167              		.cfi_def_cfa_offset 24
+  80:Src/sdadc.c   ****   SDADC_ConfParamTypeDef ConfParamStruct = {0};
+ 168              		.loc 1 80 0
+ 169 0004 0023     		movs	r3, #0
+ 170 0006 0093     		str	r3, [sp]
+ 171 0008 0193     		str	r3, [sp, #4]
+ 172 000a 0293     		str	r3, [sp, #8]
+ 173 000c 0393     		str	r3, [sp, #12]
+  81:Src/sdadc.c   **** 
+  82:Src/sdadc.c   ****   /** Configure the SDADC low power mode, fast conversion mode,
+  83:Src/sdadc.c   ****   slow clock mode and SDADC1 reference voltage 
+  84:Src/sdadc.c   ****   */
+  85:Src/sdadc.c   ****   hsdadc3.Instance = SDADC3;
+ 174              		.loc 1 85 0
+ 175 000e 1D48     		ldr	r0, .L27
+ 176 0010 1D4A     		ldr	r2, .L27+4
+ 177 0012 0260     		str	r2, [r0]
+  86:Src/sdadc.c   ****   hsdadc3.Init.IdleLowPowerMode = SDADC_LOWPOWER_NONE;
+ 178              		.loc 1 86 0
+ 179 0014 4360     		str	r3, [r0, #4]
+  87:Src/sdadc.c   ****   hsdadc3.Init.FastConversionMode = SDADC_FAST_CONV_ENABLE;
+ 180              		.loc 1 87 0
+ 181 0016 4FF08072 		mov	r2, #16777216
+ 182 001a 8260     		str	r2, [r0, #8]
+  88:Src/sdadc.c   ****   hsdadc3.Init.SlowClockMode = SDADC_SLOW_CLOCK_DISABLE;
+ 183              		.loc 1 88 0
+ 184 001c C360     		str	r3, [r0, #12]
+  89:Src/sdadc.c   ****   hsdadc3.Init.ReferenceVoltage = SDADC_VREF_VREFINT2;
+ 185              		.loc 1 89 0
+ 186 001e 4FF40073 		mov	r3, #512
+ 187 0022 0361     		str	r3, [r0, #16]
+  90:Src/sdadc.c   ****   if (HAL_SDADC_Init(&hsdadc3) != HAL_OK)
+ 188              		.loc 1 90 0
+ 189 0024 FFF7FEFF 		bl	HAL_SDADC_Init
+ 190              	.LVL10:
+ 191 0028 E8B9     		cbnz	r0, .L22
+ 192              	.L16:
+  91:Src/sdadc.c   ****   {
+ARM GAS  C:\Users\acw\AppData\Local\Temp\cc56yJZN.s 			page 6
+
+
+  92:Src/sdadc.c   ****     Error_Handler();
   93:Src/sdadc.c   ****   }
- 154              		.loc 1 93 5 view .LVU41
- 155 007e FFF7FEFF 		bl	Error_Handler
- 156              	.LVL9:
- 157              		.loc 1 96 1 is_stmt 0 view .LVU42
- 158 0082 EDE7     		b	.L1
- 159              	.L14:
- 160              		.align	2
- 161              	.L13:
- 162 0084 00000000 		.word	hsdadc1
- 163 0088 00600140 		.word	1073831936
- 164 008c 40000600 		.word	393280
- 165              		.cfi_endproc
- 166              	.LFE126:
- 168              		.section	.text.MX_SDADC3_Init,"ax",%progbits
- 169              		.align	1
- 170              		.global	MX_SDADC3_Init
- 171              		.syntax unified
- 172              		.thumb
- 173              		.thumb_func
- 174              		.fpu fpv4-sp-d16
- 176              	MX_SDADC3_Init:
- 177              	.LFB127:
-  97:Src/sdadc.c   **** /* SDADC3 init function */
-  98:Src/sdadc.c   **** void MX_SDADC3_Init(void)
-  99:Src/sdadc.c   **** {
- 178              		.loc 1 99 1 is_stmt 1 view -0
- 179              		.cfi_startproc
- 180              		@ args = 0, pretend = 0, frame = 16
- 181              		@ frame_needed = 0, uses_anonymous_args = 0
- 182 0000 00B5     		push	{lr}
- 183              	.LCFI4:
- 184              		.cfi_def_cfa_offset 4
-ARM GAS  /tmp/cctB8SXg.s 			page 6
+  94:Src/sdadc.c   ****   /** Configure The Regular Mode 
+  95:Src/sdadc.c   ****   */
+  96:Src/sdadc.c   ****   if (HAL_SDADC_SelectRegularTrigger(&hsdadc3, SDADC_SOFTWARE_TRIGGER) != HAL_OK)
+ 193              		.loc 1 96 0
+ 194 002a 0021     		movs	r1, #0
+ 195 002c 1548     		ldr	r0, .L27
+ 196 002e FFF7FEFF 		bl	HAL_SDADC_SelectRegularTrigger
+ 197              	.LVL11:
+ 198 0032 D8B9     		cbnz	r0, .L23
+ 199              	.L17:
+  97:Src/sdadc.c   ****   {
+  98:Src/sdadc.c   ****     Error_Handler();
+  99:Src/sdadc.c   ****   }
+ 100:Src/sdadc.c   ****   /** Set parameters for SDADC configuration 0 Register 
+ 101:Src/sdadc.c   ****   */
+ 102:Src/sdadc.c   ****   ConfParamStruct.InputMode = SDADC_INPUT_MODE_DIFF;
+ 200              		.loc 1 102 0
+ 201 0034 0021     		movs	r1, #0
+ 202 0036 0091     		str	r1, [sp]
+ 103:Src/sdadc.c   ****   ConfParamStruct.Gain = SDADC_GAIN_1;
+ 203              		.loc 1 103 0
+ 204 0038 0191     		str	r1, [sp, #4]
+ 104:Src/sdadc.c   ****   ConfParamStruct.CommonMode = SDADC_COMMON_MODE_VSSA;
+ 205              		.loc 1 104 0
+ 206 003a 0291     		str	r1, [sp, #8]
+ 105:Src/sdadc.c   ****   ConfParamStruct.Offset = 0;
+ 207              		.loc 1 105 0
+ 208 003c 0391     		str	r1, [sp, #12]
+ 106:Src/sdadc.c   ****   if (HAL_SDADC_PrepareChannelConfig(&hsdadc3, SDADC_CONF_INDEX_0, &ConfParamStruct) != HAL_OK)
+ 209              		.loc 1 106 0
+ 210 003e 6A46     		mov	r2, sp
+ 211 0040 1048     		ldr	r0, .L27
+ 212 0042 FFF7FEFF 		bl	HAL_SDADC_PrepareChannelConfig
+ 213              	.LVL12:
+ 214 0046 A0B9     		cbnz	r0, .L24
+ 215              	.L18:
+ 107:Src/sdadc.c   ****   {
+ 108:Src/sdadc.c   ****     Error_Handler();
+ 109:Src/sdadc.c   ****   }
+ 110:Src/sdadc.c   ****   /** Configure the Regular Channel 
+ 111:Src/sdadc.c   ****   */
+ 112:Src/sdadc.c   ****   if (HAL_SDADC_AssociateChannelConfig(&hsdadc3, SDADC_CHANNEL_8, SDADC_CONF_INDEX_0) != HAL_OK)
+ 216              		.loc 1 112 0
+ 217 0048 0022     		movs	r2, #0
+ 218 004a 1049     		ldr	r1, .L27+8
+ 219 004c 0D48     		ldr	r0, .L27
+ 220 004e FFF7FEFF 		bl	HAL_SDADC_AssociateChannelConfig
+ 221              	.LVL13:
+ 222 0052 88B9     		cbnz	r0, .L25
+ 223              	.L19:
+ 113:Src/sdadc.c   ****   {
+ 114:Src/sdadc.c   ****     Error_Handler();
+ 115:Src/sdadc.c   ****   }
+ 116:Src/sdadc.c   ****   if (HAL_SDADC_ConfigChannel(&hsdadc3, SDADC_CHANNEL_8, SDADC_CONTINUOUS_CONV_ON) != HAL_OK)
+ 224              		.loc 1 116 0
+ARM GAS  C:\Users\acw\AppData\Local\Temp\cc56yJZN.s 			page 7
 
 
- 185              		.cfi_offset 14, -4
- 186 0002 85B0     		sub	sp, sp, #20
- 187              	.LCFI5:
- 188              		.cfi_def_cfa_offset 24
- 100:Src/sdadc.c   ****   SDADC_ConfParamTypeDef ConfParamStruct = {0};
- 189              		.loc 1 100 3 view .LVU44
- 190              		.loc 1 100 26 is_stmt 0 view .LVU45
- 191 0004 0023     		movs	r3, #0
- 192 0006 0093     		str	r3, [sp]
- 193 0008 0193     		str	r3, [sp, #4]
- 194 000a 0293     		str	r3, [sp, #8]
- 195 000c 0393     		str	r3, [sp, #12]
- 101:Src/sdadc.c   **** 
- 102:Src/sdadc.c   ****   /**Configure the SDADC low power mode, fast conversion mode,
- 103:Src/sdadc.c   ****   slow clock mode and SDADC1 reference voltage 
- 104:Src/sdadc.c   ****   */
- 105:Src/sdadc.c   ****   hsdadc3.Instance = SDADC3;
- 196              		.loc 1 105 3 is_stmt 1 view .LVU46
- 197              		.loc 1 105 20 is_stmt 0 view .LVU47
- 198 000e 1D48     		ldr	r0, .L27
- 199 0010 1D4A     		ldr	r2, .L27+4
- 200 0012 0260     		str	r2, [r0]
- 106:Src/sdadc.c   ****   hsdadc3.Init.IdleLowPowerMode = SDADC_LOWPOWER_NONE;
- 201              		.loc 1 106 3 is_stmt 1 view .LVU48
- 202              		.loc 1 106 33 is_stmt 0 view .LVU49
- 203 0014 4360     		str	r3, [r0, #4]
- 107:Src/sdadc.c   ****   hsdadc3.Init.FastConversionMode = SDADC_FAST_CONV_ENABLE;
- 204              		.loc 1 107 3 is_stmt 1 view .LVU50
- 205              		.loc 1 107 35 is_stmt 0 view .LVU51
- 206 0016 4FF08072 		mov	r2, #16777216
- 207 001a 8260     		str	r2, [r0, #8]
- 108:Src/sdadc.c   ****   hsdadc3.Init.SlowClockMode = SDADC_SLOW_CLOCK_DISABLE;
- 208              		.loc 1 108 3 is_stmt 1 view .LVU52
- 209              		.loc 1 108 30 is_stmt 0 view .LVU53
- 210 001c C360     		str	r3, [r0, #12]
- 109:Src/sdadc.c   ****   hsdadc3.Init.ReferenceVoltage = SDADC_VREF_VREFINT2;
- 211              		.loc 1 109 3 is_stmt 1 view .LVU54
- 212              		.loc 1 109 33 is_stmt 0 view .LVU55
- 213 001e 4FF40073 		mov	r3, #512
- 214 0022 0361     		str	r3, [r0, #16]
- 110:Src/sdadc.c   ****   if (HAL_SDADC_Init(&hsdadc3) != HAL_OK)
- 215              		.loc 1 110 3 is_stmt 1 view .LVU56
- 216              		.loc 1 110 7 is_stmt 0 view .LVU57
- 217 0024 FFF7FEFF 		bl	HAL_SDADC_Init
- 218              	.LVL10:
- 219              		.loc 1 110 6 view .LVU58
- 220 0028 E8B9     		cbnz	r0, .L22
- 221              	.L16:
- 111:Src/sdadc.c   ****   {
- 112:Src/sdadc.c   ****     Error_Handler();
- 113:Src/sdadc.c   ****   }
- 114:Src/sdadc.c   ****   /**Configure The Regular Mode 
- 115:Src/sdadc.c   ****   */
- 116:Src/sdadc.c   ****   if (HAL_SDADC_SelectRegularTrigger(&hsdadc3, SDADC_SOFTWARE_TRIGGER) != HAL_OK)
- 222              		.loc 1 116 3 is_stmt 1 view .LVU59
- 223              		.loc 1 116 7 is_stmt 0 view .LVU60
- 224 002a 0021     		movs	r1, #0
-ARM GAS  /tmp/cctB8SXg.s 			page 7
-
-
- 225 002c 1548     		ldr	r0, .L27
- 226 002e FFF7FEFF 		bl	HAL_SDADC_SelectRegularTrigger
- 227              	.LVL11:
- 228              		.loc 1 116 6 view .LVU61
- 229 0032 D8B9     		cbnz	r0, .L23
- 230              	.L17:
+ 225 0054 0122     		movs	r2, #1
+ 226 0056 0D49     		ldr	r1, .L27+8
+ 227 0058 0A48     		ldr	r0, .L27
+ 228 005a FFF7FEFF 		bl	HAL_SDADC_ConfigChannel
+ 229              	.LVL14:
+ 230 005e 70B9     		cbnz	r0, .L26
+ 231              	.L15:
  117:Src/sdadc.c   ****   {
  118:Src/sdadc.c   ****     Error_Handler();
  119:Src/sdadc.c   ****   }
- 120:Src/sdadc.c   ****   /**Set parameters for SDADC configuration 0 Register 
- 121:Src/sdadc.c   ****   */
- 122:Src/sdadc.c   ****   ConfParamStruct.InputMode = SDADC_INPUT_MODE_DIFF;
- 231              		.loc 1 122 3 is_stmt 1 view .LVU62
- 232              		.loc 1 122 29 is_stmt 0 view .LVU63
- 233 0034 0021     		movs	r1, #0
- 234 0036 0091     		str	r1, [sp]
- 123:Src/sdadc.c   ****   ConfParamStruct.Gain = SDADC_GAIN_1;
- 235              		.loc 1 123 3 is_stmt 1 view .LVU64
- 236              		.loc 1 123 24 is_stmt 0 view .LVU65
- 237 0038 0191     		str	r1, [sp, #4]
- 124:Src/sdadc.c   ****   ConfParamStruct.CommonMode = SDADC_COMMON_MODE_VSSA;
- 238              		.loc 1 124 3 is_stmt 1 view .LVU66
- 239              		.loc 1 124 30 is_stmt 0 view .LVU67
- 240 003a 0291     		str	r1, [sp, #8]
- 125:Src/sdadc.c   ****   ConfParamStruct.Offset = 0;
- 241              		.loc 1 125 3 is_stmt 1 view .LVU68
- 242              		.loc 1 125 26 is_stmt 0 view .LVU69
- 243 003c 0391     		str	r1, [sp, #12]
- 126:Src/sdadc.c   ****   if (HAL_SDADC_PrepareChannelConfig(&hsdadc3, SDADC_CONF_INDEX_0, &ConfParamStruct) != HAL_OK)
- 244              		.loc 1 126 3 is_stmt 1 view .LVU70
- 245              		.loc 1 126 7 is_stmt 0 view .LVU71
- 246 003e 6A46     		mov	r2, sp
- 247 0040 1048     		ldr	r0, .L27
- 248 0042 FFF7FEFF 		bl	HAL_SDADC_PrepareChannelConfig
- 249              	.LVL12:
- 250              		.loc 1 126 6 view .LVU72
- 251 0046 A0B9     		cbnz	r0, .L24
- 252              	.L18:
- 127:Src/sdadc.c   ****   {
- 128:Src/sdadc.c   ****     Error_Handler();
- 129:Src/sdadc.c   ****   }
- 130:Src/sdadc.c   ****   /**Configure the Regular Channel 
- 131:Src/sdadc.c   ****   */
- 132:Src/sdadc.c   ****   if (HAL_SDADC_AssociateChannelConfig(&hsdadc3, SDADC_CHANNEL_8, SDADC_CONF_INDEX_0) != HAL_OK)
- 253              		.loc 1 132 3 is_stmt 1 view .LVU73
- 254              		.loc 1 132 7 is_stmt 0 view .LVU74
- 255 0048 0022     		movs	r2, #0
- 256 004a 1049     		ldr	r1, .L27+8
- 257 004c 0D48     		ldr	r0, .L27
- 258 004e FFF7FEFF 		bl	HAL_SDADC_AssociateChannelConfig
- 259              	.LVL13:
- 260              		.loc 1 132 6 view .LVU75
- 261 0052 88B9     		cbnz	r0, .L25
- 262              	.L19:
- 133:Src/sdadc.c   ****   {
- 134:Src/sdadc.c   ****     Error_Handler();
- 135:Src/sdadc.c   ****   }
-ARM GAS  /tmp/cctB8SXg.s 			page 8
-
-
- 136:Src/sdadc.c   ****   if (HAL_SDADC_ConfigChannel(&hsdadc3, SDADC_CHANNEL_8, SDADC_CONTINUOUS_CONV_ON) != HAL_OK)
- 263              		.loc 1 136 3 is_stmt 1 view .LVU76
- 264              		.loc 1 136 7 is_stmt 0 view .LVU77
- 265 0054 0122     		movs	r2, #1
- 266 0056 0D49     		ldr	r1, .L27+8
- 267 0058 0A48     		ldr	r0, .L27
- 268 005a FFF7FEFF 		bl	HAL_SDADC_ConfigChannel
- 269              	.LVL14:
- 270              		.loc 1 136 6 view .LVU78
- 271 005e 70B9     		cbnz	r0, .L26
- 272              	.L15:
- 137:Src/sdadc.c   ****   {
- 138:Src/sdadc.c   ****     Error_Handler();
- 139:Src/sdadc.c   ****   }
- 140:Src/sdadc.c   **** 
- 141:Src/sdadc.c   **** }
- 273              		.loc 1 141 1 view .LVU79
- 274 0060 05B0     		add	sp, sp, #20
- 275              	.LCFI6:
- 276              		.cfi_remember_state
- 277              		.cfi_def_cfa_offset 4
- 278              		@ sp needed
- 279 0062 5DF804FB 		ldr	pc, [sp], #4
- 280              	.L22:
- 281              	.LCFI7:
- 282              		.cfi_restore_state
- 112:Src/sdadc.c   ****   }
- 283              		.loc 1 112 5 is_stmt 1 view .LVU80
- 284 0066 FFF7FEFF 		bl	Error_Handler
- 285              	.LVL15:
- 286 006a DEE7     		b	.L16
- 287              	.L23:
+ 120:Src/sdadc.c   **** 
+ 121:Src/sdadc.c   **** }
+ 232              		.loc 1 121 0
+ 233 0060 05B0     		add	sp, sp, #20
+ 234              	.LCFI6:
+ 235              		.cfi_remember_state
+ 236              		.cfi_def_cfa_offset 4
+ 237              		@ sp needed
+ 238 0062 5DF804FB 		ldr	pc, [sp], #4
+ 239              	.L22:
+ 240              	.LCFI7:
+ 241              		.cfi_restore_state
+  92:Src/sdadc.c   ****   }
+ 242              		.loc 1 92 0
+ 243 0066 FFF7FEFF 		bl	Error_Handler
+ 244              	.LVL15:
+ 245 006a DEE7     		b	.L16
+ 246              	.L23:
+  98:Src/sdadc.c   ****   }
+ 247              		.loc 1 98 0
+ 248 006c FFF7FEFF 		bl	Error_Handler
+ 249              	.LVL16:
+ 250 0070 E0E7     		b	.L17
+ 251              	.L24:
+ 108:Src/sdadc.c   ****   }
+ 252              		.loc 1 108 0
+ 253 0072 FFF7FEFF 		bl	Error_Handler
+ 254              	.LVL17:
+ 255 0076 E7E7     		b	.L18
+ 256              	.L25:
+ 114:Src/sdadc.c   ****   }
+ 257              		.loc 1 114 0
+ 258 0078 FFF7FEFF 		bl	Error_Handler
+ 259              	.LVL18:
+ 260 007c EAE7     		b	.L19
+ 261              	.L26:
  118:Src/sdadc.c   ****   }
- 288              		.loc 1 118 5 view .LVU81
- 289 006c FFF7FEFF 		bl	Error_Handler
- 290              	.LVL16:
- 291 0070 E0E7     		b	.L17
- 292              	.L24:
- 128:Src/sdadc.c   ****   }
- 293              		.loc 1 128 5 view .LVU82
- 294 0072 FFF7FEFF 		bl	Error_Handler
- 295              	.LVL17:
- 296 0076 E7E7     		b	.L18
- 297              	.L25:
- 134:Src/sdadc.c   ****   }
- 298              		.loc 1 134 5 view .LVU83
- 299 0078 FFF7FEFF 		bl	Error_Handler
- 300              	.LVL18:
- 301 007c EAE7     		b	.L19
- 302              	.L26:
- 138:Src/sdadc.c   ****   }
- 303              		.loc 1 138 5 view .LVU84
- 304 007e FFF7FEFF 		bl	Error_Handler
- 305              	.LVL19:
- 306              		.loc 1 141 1 is_stmt 0 view .LVU85
- 307 0082 EDE7     		b	.L15
- 308              	.L28:
-ARM GAS  /tmp/cctB8SXg.s 			page 9
+ 262              		.loc 1 118 0
+ 263 007e FFF7FEFF 		bl	Error_Handler
+ 264              	.LVL19:
+ 265              		.loc 1 121 0
+ 266 0082 EDE7     		b	.L15
+ 267              	.L28:
+ 268              		.align	2
+ 269              	.L27:
+ 270 0084 00000000 		.word	hsdadc3
+ 271 0088 00680140 		.word	1073833984
+ARM GAS  C:\Users\acw\AppData\Local\Temp\cc56yJZN.s 			page 8
 
 
- 309              		.align	2
- 310              	.L27:
- 311 0084 00000000 		.word	hsdadc3
- 312 0088 00680140 		.word	1073833984
- 313 008c 00010800 		.word	524544
- 314              		.cfi_endproc
- 315              	.LFE127:
- 317              		.section	.text.HAL_SDADC_MspInit,"ax",%progbits
- 318              		.align	1
- 319              		.global	HAL_SDADC_MspInit
- 320              		.syntax unified
- 321              		.thumb
- 322              		.thumb_func
- 323              		.fpu fpv4-sp-d16
- 325              	HAL_SDADC_MspInit:
- 326              	.LVL20:
- 327              	.LFB128:
- 142:Src/sdadc.c   **** 
- 143:Src/sdadc.c   **** void HAL_SDADC_MspInit(SDADC_HandleTypeDef* sdadcHandle)
- 144:Src/sdadc.c   **** {
- 328              		.loc 1 144 1 is_stmt 1 view -0
- 329              		.cfi_startproc
- 330              		@ args = 0, pretend = 0, frame = 40
- 331              		@ frame_needed = 0, uses_anonymous_args = 0
- 332              		.loc 1 144 1 is_stmt 0 view .LVU87
- 333 0000 10B5     		push	{r4, lr}
- 334              	.LCFI8:
- 335              		.cfi_def_cfa_offset 8
- 336              		.cfi_offset 4, -8
- 337              		.cfi_offset 14, -4
- 338 0002 8AB0     		sub	sp, sp, #40
- 339              	.LCFI9:
- 340              		.cfi_def_cfa_offset 48
- 341 0004 0446     		mov	r4, r0
- 145:Src/sdadc.c   **** 
- 146:Src/sdadc.c   ****   GPIO_InitTypeDef GPIO_InitStruct = {0};
- 342              		.loc 1 146 3 is_stmt 1 view .LVU88
- 343              		.loc 1 146 20 is_stmt 0 view .LVU89
- 344 0006 0023     		movs	r3, #0
- 345 0008 0593     		str	r3, [sp, #20]
- 346 000a 0693     		str	r3, [sp, #24]
- 347 000c 0793     		str	r3, [sp, #28]
- 348 000e 0893     		str	r3, [sp, #32]
- 349 0010 0993     		str	r3, [sp, #36]
- 147:Src/sdadc.c   ****   if(sdadcHandle->Instance==SDADC1)
- 350              		.loc 1 147 3 is_stmt 1 view .LVU90
- 351              		.loc 1 147 17 is_stmt 0 view .LVU91
- 352 0012 0368     		ldr	r3, [r0]
- 353              		.loc 1 147 5 view .LVU92
- 354 0014 3B4A     		ldr	r2, .L39
- 355 0016 9342     		cmp	r3, r2
- 356 0018 04D0     		beq	.L35
- 148:Src/sdadc.c   ****   {
- 149:Src/sdadc.c   ****   /* USER CODE BEGIN SDADC1_MspInit 0 */
- 150:Src/sdadc.c   **** 
- 151:Src/sdadc.c   ****   /* USER CODE END SDADC1_MspInit 0 */
- 152:Src/sdadc.c   ****     /* SDADC1 clock enable */
-ARM GAS  /tmp/cctB8SXg.s 			page 10
+ 272 008c 00010800 		.word	524544
+ 273              		.cfi_endproc
+ 274              	.LFE127:
+ 276              		.section	.text.HAL_SDADC_MspInit,"ax",%progbits
+ 277              		.align	1
+ 278              		.global	HAL_SDADC_MspInit
+ 279              		.syntax unified
+ 280              		.thumb
+ 281              		.thumb_func
+ 282              		.fpu fpv4-sp-d16
+ 284              	HAL_SDADC_MspInit:
+ 285              	.LFB128:
+ 122:Src/sdadc.c   **** 
+ 123:Src/sdadc.c   **** void HAL_SDADC_MspInit(SDADC_HandleTypeDef* sdadcHandle)
+ 124:Src/sdadc.c   **** {
+ 286              		.loc 1 124 0
+ 287              		.cfi_startproc
+ 288              		@ args = 0, pretend = 0, frame = 40
+ 289              		@ frame_needed = 0, uses_anonymous_args = 0
+ 290              	.LVL20:
+ 291 0000 10B5     		push	{r4, lr}
+ 292              	.LCFI8:
+ 293              		.cfi_def_cfa_offset 8
+ 294              		.cfi_offset 4, -8
+ 295              		.cfi_offset 14, -4
+ 296 0002 8AB0     		sub	sp, sp, #40
+ 297              	.LCFI9:
+ 298              		.cfi_def_cfa_offset 48
+ 299 0004 0446     		mov	r4, r0
+ 125:Src/sdadc.c   **** 
+ 126:Src/sdadc.c   ****   GPIO_InitTypeDef GPIO_InitStruct = {0};
+ 300              		.loc 1 126 0
+ 301 0006 0023     		movs	r3, #0
+ 302 0008 0593     		str	r3, [sp, #20]
+ 303 000a 0693     		str	r3, [sp, #24]
+ 304 000c 0793     		str	r3, [sp, #28]
+ 305 000e 0893     		str	r3, [sp, #32]
+ 306 0010 0993     		str	r3, [sp, #36]
+ 127:Src/sdadc.c   ****   if(sdadcHandle->Instance==SDADC1)
+ 307              		.loc 1 127 0
+ 308 0012 0368     		ldr	r3, [r0]
+ 309 0014 3B4A     		ldr	r2, .L39
+ 310 0016 9342     		cmp	r3, r2
+ 311 0018 04D0     		beq	.L35
+ 128:Src/sdadc.c   ****   {
+ 129:Src/sdadc.c   ****   /* USER CODE BEGIN SDADC1_MspInit 0 */
+ 130:Src/sdadc.c   **** 
+ 131:Src/sdadc.c   ****   /* USER CODE END SDADC1_MspInit 0 */
+ 132:Src/sdadc.c   ****     /* SDADC1 clock enable */
+ 133:Src/sdadc.c   ****     __HAL_RCC_SDADC1_CLK_ENABLE();
+ 134:Src/sdadc.c   ****   
+ 135:Src/sdadc.c   ****     __HAL_RCC_GPIOB_CLK_ENABLE();
+ 136:Src/sdadc.c   ****     /**SDADC1 GPIO Configuration    
+ 137:Src/sdadc.c   ****     PB0     ------> SDADC1_AIN6P
+ 138:Src/sdadc.c   ****     PB1     ------> SDADC1_AIN6M 
+ 139:Src/sdadc.c   ****     */
+ 140:Src/sdadc.c   ****     GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1;
+ARM GAS  C:\Users\acw\AppData\Local\Temp\cc56yJZN.s 			page 9
 
 
- 153:Src/sdadc.c   ****     __HAL_RCC_SDADC1_CLK_ENABLE();
- 154:Src/sdadc.c   ****   
- 155:Src/sdadc.c   ****     __HAL_RCC_GPIOB_CLK_ENABLE();
- 156:Src/sdadc.c   ****     /**SDADC1 GPIO Configuration    
- 157:Src/sdadc.c   ****     PB0     ------> SDADC1_AIN6P
- 158:Src/sdadc.c   ****     PB1     ------> SDADC1_AIN6M 
- 159:Src/sdadc.c   ****     */
- 160:Src/sdadc.c   ****     GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1;
- 161:Src/sdadc.c   ****     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
- 162:Src/sdadc.c   ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
- 163:Src/sdadc.c   ****     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
- 164:Src/sdadc.c   **** 
- 165:Src/sdadc.c   ****     /* SDADC1 DMA Init */
- 166:Src/sdadc.c   ****     /* SDADC1 Init */
- 167:Src/sdadc.c   ****     hdma_sdadc1.Instance = DMA2_Channel3;
- 168:Src/sdadc.c   ****     hdma_sdadc1.Init.Direction = DMA_PERIPH_TO_MEMORY;
- 169:Src/sdadc.c   ****     hdma_sdadc1.Init.PeriphInc = DMA_PINC_DISABLE;
- 170:Src/sdadc.c   ****     hdma_sdadc1.Init.MemInc = DMA_MINC_ENABLE;
- 171:Src/sdadc.c   ****     hdma_sdadc1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
- 172:Src/sdadc.c   ****     hdma_sdadc1.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
- 173:Src/sdadc.c   ****     hdma_sdadc1.Init.Mode = DMA_NORMAL;
- 174:Src/sdadc.c   ****     hdma_sdadc1.Init.Priority = DMA_PRIORITY_MEDIUM;
- 175:Src/sdadc.c   ****     if (HAL_DMA_Init(&hdma_sdadc1) != HAL_OK)
- 176:Src/sdadc.c   ****     {
- 177:Src/sdadc.c   ****       Error_Handler();
- 178:Src/sdadc.c   ****     }
- 179:Src/sdadc.c   **** 
- 180:Src/sdadc.c   ****     __HAL_LINKDMA(sdadcHandle,hdma,hdma_sdadc1);
- 181:Src/sdadc.c   **** 
- 182:Src/sdadc.c   ****   /* USER CODE BEGIN SDADC1_MspInit 1 */
+ 141:Src/sdadc.c   ****     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+ 142:Src/sdadc.c   ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 143:Src/sdadc.c   ****     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+ 144:Src/sdadc.c   **** 
+ 145:Src/sdadc.c   ****     /* SDADC1 DMA Init */
+ 146:Src/sdadc.c   ****     /* SDADC1 Init */
+ 147:Src/sdadc.c   ****     hdma_sdadc1.Instance = DMA2_Channel3;
+ 148:Src/sdadc.c   ****     hdma_sdadc1.Init.Direction = DMA_PERIPH_TO_MEMORY;
+ 149:Src/sdadc.c   ****     hdma_sdadc1.Init.PeriphInc = DMA_PINC_DISABLE;
+ 150:Src/sdadc.c   ****     hdma_sdadc1.Init.MemInc = DMA_MINC_ENABLE;
+ 151:Src/sdadc.c   ****     hdma_sdadc1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
+ 152:Src/sdadc.c   ****     hdma_sdadc1.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
+ 153:Src/sdadc.c   ****     hdma_sdadc1.Init.Mode = DMA_NORMAL;
+ 154:Src/sdadc.c   ****     hdma_sdadc1.Init.Priority = DMA_PRIORITY_MEDIUM;
+ 155:Src/sdadc.c   ****     if (HAL_DMA_Init(&hdma_sdadc1) != HAL_OK)
+ 156:Src/sdadc.c   ****     {
+ 157:Src/sdadc.c   ****       Error_Handler();
+ 158:Src/sdadc.c   ****     }
+ 159:Src/sdadc.c   **** 
+ 160:Src/sdadc.c   ****     __HAL_LINKDMA(sdadcHandle,hdma,hdma_sdadc1);
+ 161:Src/sdadc.c   **** 
+ 162:Src/sdadc.c   ****   /* USER CODE BEGIN SDADC1_MspInit 1 */
+ 163:Src/sdadc.c   **** 
+ 164:Src/sdadc.c   ****   /* USER CODE END SDADC1_MspInit 1 */
+ 165:Src/sdadc.c   ****   }
+ 166:Src/sdadc.c   ****   else if(sdadcHandle->Instance==SDADC3)
+ 312              		.loc 1 166 0
+ 313 001a 3B4A     		ldr	r2, .L39+4
+ 314 001c 9342     		cmp	r3, r2
+ 315 001e 37D0     		beq	.L36
+ 316              	.LVL21:
+ 317              	.L29:
+ 167:Src/sdadc.c   ****   {
+ 168:Src/sdadc.c   ****   /* USER CODE BEGIN SDADC3_MspInit 0 */
+ 169:Src/sdadc.c   **** 
+ 170:Src/sdadc.c   ****   /* USER CODE END SDADC3_MspInit 0 */
+ 171:Src/sdadc.c   ****     /* SDADC3 clock enable */
+ 172:Src/sdadc.c   ****     __HAL_RCC_SDADC3_CLK_ENABLE();
+ 173:Src/sdadc.c   ****   
+ 174:Src/sdadc.c   ****     __HAL_RCC_GPIOB_CLK_ENABLE();
+ 175:Src/sdadc.c   ****     /**SDADC3 GPIO Configuration    
+ 176:Src/sdadc.c   ****     PB14     ------> SDADC3_AIN8P
+ 177:Src/sdadc.c   ****     PB15     ------> SDADC3_AIN8M 
+ 178:Src/sdadc.c   ****     */
+ 179:Src/sdadc.c   ****     GPIO_InitStruct.Pin = GPIO_PIN_14|GPIO_PIN_15;
+ 180:Src/sdadc.c   ****     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+ 181:Src/sdadc.c   ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 182:Src/sdadc.c   ****     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
  183:Src/sdadc.c   **** 
- 184:Src/sdadc.c   ****   /* USER CODE END SDADC1_MspInit 1 */
- 185:Src/sdadc.c   ****   }
- 186:Src/sdadc.c   ****   else if(sdadcHandle->Instance==SDADC3)
- 357              		.loc 1 186 8 is_stmt 1 view .LVU93
- 358              		.loc 1 186 10 is_stmt 0 view .LVU94
- 359 001a 3B4A     		ldr	r2, .L39+4
- 360 001c 9342     		cmp	r3, r2
- 361 001e 37D0     		beq	.L36
- 362              	.LVL21:
- 363              	.L29:
- 187:Src/sdadc.c   ****   {
- 188:Src/sdadc.c   ****   /* USER CODE BEGIN SDADC3_MspInit 0 */
- 189:Src/sdadc.c   **** 
- 190:Src/sdadc.c   ****   /* USER CODE END SDADC3_MspInit 0 */
- 191:Src/sdadc.c   ****     /* SDADC3 clock enable */
- 192:Src/sdadc.c   ****     __HAL_RCC_SDADC3_CLK_ENABLE();
- 193:Src/sdadc.c   ****   
- 194:Src/sdadc.c   ****     __HAL_RCC_GPIOB_CLK_ENABLE();
- 195:Src/sdadc.c   ****     /**SDADC3 GPIO Configuration    
- 196:Src/sdadc.c   ****     PB14     ------> SDADC3_AIN8P
- 197:Src/sdadc.c   ****     PB15     ------> SDADC3_AIN8M 
- 198:Src/sdadc.c   ****     */
- 199:Src/sdadc.c   ****     GPIO_InitStruct.Pin = GPIO_PIN_14|GPIO_PIN_15;
- 200:Src/sdadc.c   ****     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
- 201:Src/sdadc.c   ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
- 202:Src/sdadc.c   ****     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-ARM GAS  /tmp/cctB8SXg.s 			page 11
+ 184:Src/sdadc.c   ****     /* SDADC3 DMA Init */
+ 185:Src/sdadc.c   ****     /* SDADC3 Init */
+ 186:Src/sdadc.c   ****     hdma_sdadc3.Instance = DMA2_Channel5;
+ 187:Src/sdadc.c   ****     hdma_sdadc3.Init.Direction = DMA_PERIPH_TO_MEMORY;
+ 188:Src/sdadc.c   ****     hdma_sdadc3.Init.PeriphInc = DMA_PINC_DISABLE;
+ 189:Src/sdadc.c   ****     hdma_sdadc3.Init.MemInc = DMA_MINC_ENABLE;
+ 190:Src/sdadc.c   ****     hdma_sdadc3.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+ 191:Src/sdadc.c   ****     hdma_sdadc3.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
+ARM GAS  C:\Users\acw\AppData\Local\Temp\cc56yJZN.s 			page 10
 
 
- 203:Src/sdadc.c   **** 
- 204:Src/sdadc.c   ****     /* SDADC3 DMA Init */
- 205:Src/sdadc.c   ****     /* SDADC3 Init */
- 206:Src/sdadc.c   ****     hdma_sdadc3.Instance = DMA2_Channel5;
- 207:Src/sdadc.c   ****     hdma_sdadc3.Init.Direction = DMA_PERIPH_TO_MEMORY;
- 208:Src/sdadc.c   ****     hdma_sdadc3.Init.PeriphInc = DMA_PINC_DISABLE;
- 209:Src/sdadc.c   ****     hdma_sdadc3.Init.MemInc = DMA_MINC_ENABLE;
- 210:Src/sdadc.c   ****     hdma_sdadc3.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
- 211:Src/sdadc.c   ****     hdma_sdadc3.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
- 212:Src/sdadc.c   ****     hdma_sdadc3.Init.Mode = DMA_CIRCULAR;
- 213:Src/sdadc.c   ****     hdma_sdadc3.Init.Priority = DMA_PRIORITY_MEDIUM;
- 214:Src/sdadc.c   ****     if (HAL_DMA_Init(&hdma_sdadc3) != HAL_OK)
- 215:Src/sdadc.c   ****     {
- 216:Src/sdadc.c   ****       Error_Handler();
- 217:Src/sdadc.c   ****     }
- 218:Src/sdadc.c   **** 
- 219:Src/sdadc.c   ****     __HAL_LINKDMA(sdadcHandle,hdma,hdma_sdadc3);
- 220:Src/sdadc.c   **** 
- 221:Src/sdadc.c   ****   /* USER CODE BEGIN SDADC3_MspInit 1 */
- 222:Src/sdadc.c   **** 
- 223:Src/sdadc.c   ****   /* USER CODE END SDADC3_MspInit 1 */
- 224:Src/sdadc.c   ****   }
- 225:Src/sdadc.c   **** }
- 364              		.loc 1 225 1 view .LVU95
- 365 0020 0AB0     		add	sp, sp, #40
- 366              	.LCFI10:
- 367              		.cfi_remember_state
- 368              		.cfi_def_cfa_offset 8
- 369              		@ sp needed
- 370 0022 10BD     		pop	{r4, pc}
- 371              	.LVL22:
- 372              	.L35:
- 373              	.LCFI11:
- 374              		.cfi_restore_state
- 153:Src/sdadc.c   ****   
- 375              		.loc 1 153 5 is_stmt 1 view .LVU96
- 376              	.LBB2:
- 153:Src/sdadc.c   ****   
- 377              		.loc 1 153 5 view .LVU97
- 153:Src/sdadc.c   ****   
- 378              		.loc 1 153 5 view .LVU98
- 379 0024 394B     		ldr	r3, .L39+8
- 380 0026 9A69     		ldr	r2, [r3, #24]
- 381 0028 42F08072 		orr	r2, r2, #16777216
- 382 002c 9A61     		str	r2, [r3, #24]
- 153:Src/sdadc.c   ****   
- 383              		.loc 1 153 5 view .LVU99
- 384 002e 9A69     		ldr	r2, [r3, #24]
- 385 0030 02F08072 		and	r2, r2, #16777216
- 386 0034 0192     		str	r2, [sp, #4]
- 153:Src/sdadc.c   ****   
- 387              		.loc 1 153 5 view .LVU100
- 388 0036 019A     		ldr	r2, [sp, #4]
- 389              	.LBE2:
- 155:Src/sdadc.c   ****     /**SDADC1 GPIO Configuration    
- 390              		.loc 1 155 5 view .LVU101
- 391              	.LBB3:
-ARM GAS  /tmp/cctB8SXg.s 			page 12
-
-
- 155:Src/sdadc.c   ****     /**SDADC1 GPIO Configuration    
- 392              		.loc 1 155 5 view .LVU102
- 155:Src/sdadc.c   ****     /**SDADC1 GPIO Configuration    
- 393              		.loc 1 155 5 view .LVU103
- 394 0038 5A69     		ldr	r2, [r3, #20]
- 395 003a 42F48022 		orr	r2, r2, #262144
- 396 003e 5A61     		str	r2, [r3, #20]
- 155:Src/sdadc.c   ****     /**SDADC1 GPIO Configuration    
- 397              		.loc 1 155 5 view .LVU104
- 398 0040 5B69     		ldr	r3, [r3, #20]
- 399 0042 03F48023 		and	r3, r3, #262144
- 400 0046 0293     		str	r3, [sp, #8]
- 155:Src/sdadc.c   ****     /**SDADC1 GPIO Configuration    
- 401              		.loc 1 155 5 view .LVU105
- 402 0048 029B     		ldr	r3, [sp, #8]
- 403              	.LBE3:
- 160:Src/sdadc.c   ****     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
- 404              		.loc 1 160 5 view .LVU106
- 160:Src/sdadc.c   ****     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
- 405              		.loc 1 160 25 is_stmt 0 view .LVU107
- 406 004a 0323     		movs	r3, #3
- 407 004c 0593     		str	r3, [sp, #20]
- 161:Src/sdadc.c   ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
- 408              		.loc 1 161 5 is_stmt 1 view .LVU108
- 161:Src/sdadc.c   ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
- 409              		.loc 1 161 26 is_stmt 0 view .LVU109
- 410 004e 0693     		str	r3, [sp, #24]
- 162:Src/sdadc.c   ****     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
- 411              		.loc 1 162 5 is_stmt 1 view .LVU110
- 163:Src/sdadc.c   **** 
- 412              		.loc 1 163 5 view .LVU111
- 413 0050 05A9     		add	r1, sp, #20
- 414 0052 2F48     		ldr	r0, .L39+12
- 415              	.LVL23:
- 163:Src/sdadc.c   **** 
- 416              		.loc 1 163 5 is_stmt 0 view .LVU112
- 417 0054 FFF7FEFF 		bl	HAL_GPIO_Init
- 418              	.LVL24:
- 167:Src/sdadc.c   ****     hdma_sdadc1.Init.Direction = DMA_PERIPH_TO_MEMORY;
- 419              		.loc 1 167 5 is_stmt 1 view .LVU113
- 167:Src/sdadc.c   ****     hdma_sdadc1.Init.Direction = DMA_PERIPH_TO_MEMORY;
- 420              		.loc 1 167 26 is_stmt 0 view .LVU114
- 421 0058 2E48     		ldr	r0, .L39+16
- 422 005a 2F4B     		ldr	r3, .L39+20
- 423 005c 0360     		str	r3, [r0]
- 168:Src/sdadc.c   ****     hdma_sdadc1.Init.PeriphInc = DMA_PINC_DISABLE;
- 424              		.loc 1 168 5 is_stmt 1 view .LVU115
- 168:Src/sdadc.c   ****     hdma_sdadc1.Init.PeriphInc = DMA_PINC_DISABLE;
- 425              		.loc 1 168 32 is_stmt 0 view .LVU116
- 426 005e 0023     		movs	r3, #0
- 427 0060 4360     		str	r3, [r0, #4]
- 169:Src/sdadc.c   ****     hdma_sdadc1.Init.MemInc = DMA_MINC_ENABLE;
- 428              		.loc 1 169 5 is_stmt 1 view .LVU117
- 169:Src/sdadc.c   ****     hdma_sdadc1.Init.MemInc = DMA_MINC_ENABLE;
- 429              		.loc 1 169 32 is_stmt 0 view .LVU118
- 430 0062 8360     		str	r3, [r0, #8]
- 170:Src/sdadc.c   ****     hdma_sdadc1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
-ARM GAS  /tmp/cctB8SXg.s 			page 13
-
-
- 431              		.loc 1 170 5 is_stmt 1 view .LVU119
- 170:Src/sdadc.c   ****     hdma_sdadc1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
- 432              		.loc 1 170 29 is_stmt 0 view .LVU120
- 433 0064 8022     		movs	r2, #128
- 434 0066 C260     		str	r2, [r0, #12]
- 171:Src/sdadc.c   ****     hdma_sdadc1.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
- 435              		.loc 1 171 5 is_stmt 1 view .LVU121
- 171:Src/sdadc.c   ****     hdma_sdadc1.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
- 436              		.loc 1 171 42 is_stmt 0 view .LVU122
- 437 0068 4FF48072 		mov	r2, #256
- 438 006c 0261     		str	r2, [r0, #16]
- 172:Src/sdadc.c   ****     hdma_sdadc1.Init.Mode = DMA_NORMAL;
- 439              		.loc 1 172 5 is_stmt 1 view .LVU123
- 172:Src/sdadc.c   ****     hdma_sdadc1.Init.Mode = DMA_NORMAL;
- 440              		.loc 1 172 39 is_stmt 0 view .LVU124
- 441 006e 4FF48062 		mov	r2, #1024
- 442 0072 4261     		str	r2, [r0, #20]
- 173:Src/sdadc.c   ****     hdma_sdadc1.Init.Priority = DMA_PRIORITY_MEDIUM;
- 443              		.loc 1 173 5 is_stmt 1 view .LVU125
- 173:Src/sdadc.c   ****     hdma_sdadc1.Init.Priority = DMA_PRIORITY_MEDIUM;
- 444              		.loc 1 173 27 is_stmt 0 view .LVU126
- 445 0074 8361     		str	r3, [r0, #24]
- 174:Src/sdadc.c   ****     if (HAL_DMA_Init(&hdma_sdadc1) != HAL_OK)
- 446              		.loc 1 174 5 is_stmt 1 view .LVU127
- 174:Src/sdadc.c   ****     if (HAL_DMA_Init(&hdma_sdadc1) != HAL_OK)
- 447              		.loc 1 174 31 is_stmt 0 view .LVU128
- 448 0076 4FF48053 		mov	r3, #4096
- 449 007a C361     		str	r3, [r0, #28]
- 175:Src/sdadc.c   ****     {
- 450              		.loc 1 175 5 is_stmt 1 view .LVU129
- 175:Src/sdadc.c   ****     {
- 451              		.loc 1 175 9 is_stmt 0 view .LVU130
- 452 007c FFF7FEFF 		bl	HAL_DMA_Init
- 453              	.LVL25:
- 175:Src/sdadc.c   ****     {
- 454              		.loc 1 175 8 view .LVU131
- 455 0080 18B9     		cbnz	r0, .L37
- 456              	.L31:
- 180:Src/sdadc.c   **** 
- 457              		.loc 1 180 5 is_stmt 1 view .LVU132
- 180:Src/sdadc.c   **** 
- 458              		.loc 1 180 5 view .LVU133
- 459 0082 244B     		ldr	r3, .L39+16
- 460 0084 6361     		str	r3, [r4, #20]
- 180:Src/sdadc.c   **** 
- 461              		.loc 1 180 5 view .LVU134
- 462 0086 5C62     		str	r4, [r3, #36]
- 463 0088 CAE7     		b	.L29
- 464              	.L37:
- 177:Src/sdadc.c   ****     }
- 465              		.loc 1 177 7 view .LVU135
- 466 008a FFF7FEFF 		bl	Error_Handler
- 467              	.LVL26:
- 468 008e F8E7     		b	.L31
- 469              	.LVL27:
- 470              	.L36:
- 192:Src/sdadc.c   ****   
-ARM GAS  /tmp/cctB8SXg.s 			page 14
-
-
- 471              		.loc 1 192 5 view .LVU136
- 472              	.LBB4:
- 192:Src/sdadc.c   ****   
- 473              		.loc 1 192 5 view .LVU137
- 192:Src/sdadc.c   ****   
- 474              		.loc 1 192 5 view .LVU138
- 475 0090 1E4B     		ldr	r3, .L39+8
- 476 0092 9A69     		ldr	r2, [r3, #24]
- 477 0094 42F08062 		orr	r2, r2, #67108864
- 478 0098 9A61     		str	r2, [r3, #24]
- 192:Src/sdadc.c   ****   
- 479              		.loc 1 192 5 view .LVU139
- 480 009a 9A69     		ldr	r2, [r3, #24]
- 481 009c 02F08062 		and	r2, r2, #67108864
- 482 00a0 0392     		str	r2, [sp, #12]
- 192:Src/sdadc.c   ****   
- 483              		.loc 1 192 5 view .LVU140
- 484 00a2 039A     		ldr	r2, [sp, #12]
- 485              	.LBE4:
- 194:Src/sdadc.c   ****     /**SDADC3 GPIO Configuration    
- 486              		.loc 1 194 5 view .LVU141
- 487              	.LBB5:
- 194:Src/sdadc.c   ****     /**SDADC3 GPIO Configuration    
- 488              		.loc 1 194 5 view .LVU142
- 194:Src/sdadc.c   ****     /**SDADC3 GPIO Configuration    
- 489              		.loc 1 194 5 view .LVU143
- 490 00a4 5A69     		ldr	r2, [r3, #20]
- 491 00a6 42F48022 		orr	r2, r2, #262144
- 492 00aa 5A61     		str	r2, [r3, #20]
- 194:Src/sdadc.c   ****     /**SDADC3 GPIO Configuration    
- 493              		.loc 1 194 5 view .LVU144
- 494 00ac 5B69     		ldr	r3, [r3, #20]
- 495 00ae 03F48023 		and	r3, r3, #262144
- 496 00b2 0493     		str	r3, [sp, #16]
- 194:Src/sdadc.c   ****     /**SDADC3 GPIO Configuration    
- 497              		.loc 1 194 5 view .LVU145
- 498 00b4 049B     		ldr	r3, [sp, #16]
- 499              	.LBE5:
- 199:Src/sdadc.c   ****     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
- 500              		.loc 1 199 5 view .LVU146
- 199:Src/sdadc.c   ****     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
- 501              		.loc 1 199 25 is_stmt 0 view .LVU147
- 502 00b6 4FF44043 		mov	r3, #49152
- 503 00ba 0593     		str	r3, [sp, #20]
- 200:Src/sdadc.c   ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
- 504              		.loc 1 200 5 is_stmt 1 view .LVU148
- 200:Src/sdadc.c   ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
- 505              		.loc 1 200 26 is_stmt 0 view .LVU149
- 506 00bc 0323     		movs	r3, #3
- 507 00be 0693     		str	r3, [sp, #24]
- 201:Src/sdadc.c   ****     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
- 508              		.loc 1 201 5 is_stmt 1 view .LVU150
+ 192:Src/sdadc.c   ****     hdma_sdadc3.Init.Mode = DMA_CIRCULAR;
+ 193:Src/sdadc.c   ****     hdma_sdadc3.Init.Priority = DMA_PRIORITY_MEDIUM;
+ 194:Src/sdadc.c   ****     if (HAL_DMA_Init(&hdma_sdadc3) != HAL_OK)
+ 195:Src/sdadc.c   ****     {
+ 196:Src/sdadc.c   ****       Error_Handler();
+ 197:Src/sdadc.c   ****     }
+ 198:Src/sdadc.c   **** 
+ 199:Src/sdadc.c   ****     __HAL_LINKDMA(sdadcHandle,hdma,hdma_sdadc3);
+ 200:Src/sdadc.c   **** 
+ 201:Src/sdadc.c   ****   /* USER CODE BEGIN SDADC3_MspInit 1 */
  202:Src/sdadc.c   **** 
- 509              		.loc 1 202 5 view .LVU151
- 510 00c0 05A9     		add	r1, sp, #20
- 511 00c2 1348     		ldr	r0, .L39+12
- 512              	.LVL28:
-ARM GAS  /tmp/cctB8SXg.s 			page 15
+ 203:Src/sdadc.c   ****   /* USER CODE END SDADC3_MspInit 1 */
+ 204:Src/sdadc.c   ****   }
+ 205:Src/sdadc.c   **** }
+ 318              		.loc 1 205 0
+ 319 0020 0AB0     		add	sp, sp, #40
+ 320              	.LCFI10:
+ 321              		.cfi_remember_state
+ 322              		.cfi_def_cfa_offset 8
+ 323              		@ sp needed
+ 324 0022 10BD     		pop	{r4, pc}
+ 325              	.LVL22:
+ 326              	.L35:
+ 327              	.LCFI11:
+ 328              		.cfi_restore_state
+ 329              	.LBB2:
+ 133:Src/sdadc.c   ****   
+ 330              		.loc 1 133 0
+ 331 0024 394B     		ldr	r3, .L39+8
+ 332 0026 9A69     		ldr	r2, [r3, #24]
+ 333 0028 42F08072 		orr	r2, r2, #16777216
+ 334 002c 9A61     		str	r2, [r3, #24]
+ 335 002e 9A69     		ldr	r2, [r3, #24]
+ 336 0030 02F08072 		and	r2, r2, #16777216
+ 337 0034 0192     		str	r2, [sp, #4]
+ 338 0036 019A     		ldr	r2, [sp, #4]
+ 339              	.LBE2:
+ 340              	.LBB3:
+ 135:Src/sdadc.c   ****     /**SDADC1 GPIO Configuration    
+ 341              		.loc 1 135 0
+ 342 0038 5A69     		ldr	r2, [r3, #20]
+ 343 003a 42F48022 		orr	r2, r2, #262144
+ 344 003e 5A61     		str	r2, [r3, #20]
+ 345 0040 5B69     		ldr	r3, [r3, #20]
+ 346 0042 03F48023 		and	r3, r3, #262144
+ 347 0046 0293     		str	r3, [sp, #8]
+ 348 0048 029B     		ldr	r3, [sp, #8]
+ 349              	.LBE3:
+ 140:Src/sdadc.c   ****     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+ 350              		.loc 1 140 0
+ 351 004a 0323     		movs	r3, #3
+ 352 004c 0593     		str	r3, [sp, #20]
+ 141:Src/sdadc.c   ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 353              		.loc 1 141 0
+ 354 004e 0693     		str	r3, [sp, #24]
+ 143:Src/sdadc.c   **** 
+ 355              		.loc 1 143 0
+ARM GAS  C:\Users\acw\AppData\Local\Temp\cc56yJZN.s 			page 11
 
 
- 202:Src/sdadc.c   **** 
- 513              		.loc 1 202 5 is_stmt 0 view .LVU152
- 514 00c4 FFF7FEFF 		bl	HAL_GPIO_Init
- 515              	.LVL29:
- 206:Src/sdadc.c   ****     hdma_sdadc3.Init.Direction = DMA_PERIPH_TO_MEMORY;
- 516              		.loc 1 206 5 is_stmt 1 view .LVU153
- 206:Src/sdadc.c   ****     hdma_sdadc3.Init.Direction = DMA_PERIPH_TO_MEMORY;
- 517              		.loc 1 206 26 is_stmt 0 view .LVU154
- 518 00c8 1448     		ldr	r0, .L39+24
- 519 00ca 154B     		ldr	r3, .L39+28
- 520 00cc 0360     		str	r3, [r0]
- 207:Src/sdadc.c   ****     hdma_sdadc3.Init.PeriphInc = DMA_PINC_DISABLE;
- 521              		.loc 1 207 5 is_stmt 1 view .LVU155
- 207:Src/sdadc.c   ****     hdma_sdadc3.Init.PeriphInc = DMA_PINC_DISABLE;
- 522              		.loc 1 207 32 is_stmt 0 view .LVU156
- 523 00ce 0023     		movs	r3, #0
- 524 00d0 4360     		str	r3, [r0, #4]
- 208:Src/sdadc.c   ****     hdma_sdadc3.Init.MemInc = DMA_MINC_ENABLE;
- 525              		.loc 1 208 5 is_stmt 1 view .LVU157
- 208:Src/sdadc.c   ****     hdma_sdadc3.Init.MemInc = DMA_MINC_ENABLE;
- 526              		.loc 1 208 32 is_stmt 0 view .LVU158
- 527 00d2 8360     		str	r3, [r0, #8]
- 209:Src/sdadc.c   ****     hdma_sdadc3.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
- 528              		.loc 1 209 5 is_stmt 1 view .LVU159
- 209:Src/sdadc.c   ****     hdma_sdadc3.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
- 529              		.loc 1 209 29 is_stmt 0 view .LVU160
- 530 00d4 8023     		movs	r3, #128
- 531 00d6 C360     		str	r3, [r0, #12]
- 210:Src/sdadc.c   ****     hdma_sdadc3.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
- 532              		.loc 1 210 5 is_stmt 1 view .LVU161
- 210:Src/sdadc.c   ****     hdma_sdadc3.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
- 533              		.loc 1 210 42 is_stmt 0 view .LVU162
- 534 00d8 4FF40073 		mov	r3, #512
- 535 00dc 0361     		str	r3, [r0, #16]
- 211:Src/sdadc.c   ****     hdma_sdadc3.Init.Mode = DMA_CIRCULAR;
- 536              		.loc 1 211 5 is_stmt 1 view .LVU163
- 211:Src/sdadc.c   ****     hdma_sdadc3.Init.Mode = DMA_CIRCULAR;
- 537              		.loc 1 211 39 is_stmt 0 view .LVU164
- 538 00de 4FF40063 		mov	r3, #2048
- 539 00e2 4361     		str	r3, [r0, #20]
- 212:Src/sdadc.c   ****     hdma_sdadc3.Init.Priority = DMA_PRIORITY_MEDIUM;
- 540              		.loc 1 212 5 is_stmt 1 view .LVU165
- 212:Src/sdadc.c   ****     hdma_sdadc3.Init.Priority = DMA_PRIORITY_MEDIUM;
- 541              		.loc 1 212 27 is_stmt 0 view .LVU166
- 542 00e4 2023     		movs	r3, #32
- 543 00e6 8361     		str	r3, [r0, #24]
- 213:Src/sdadc.c   ****     if (HAL_DMA_Init(&hdma_sdadc3) != HAL_OK)
- 544              		.loc 1 213 5 is_stmt 1 view .LVU167
- 213:Src/sdadc.c   ****     if (HAL_DMA_Init(&hdma_sdadc3) != HAL_OK)
- 545              		.loc 1 213 31 is_stmt 0 view .LVU168
- 546 00e8 4FF48053 		mov	r3, #4096
- 547 00ec C361     		str	r3, [r0, #28]
- 214:Src/sdadc.c   ****     {
- 548              		.loc 1 214 5 is_stmt 1 view .LVU169
- 214:Src/sdadc.c   ****     {
- 549              		.loc 1 214 9 is_stmt 0 view .LVU170
- 550 00ee FFF7FEFF 		bl	HAL_DMA_Init
-ARM GAS  /tmp/cctB8SXg.s 			page 16
+ 356 0050 05A9     		add	r1, sp, #20
+ 357 0052 2F48     		ldr	r0, .L39+12
+ 358              	.LVL23:
+ 359 0054 FFF7FEFF 		bl	HAL_GPIO_Init
+ 360              	.LVL24:
+ 147:Src/sdadc.c   ****     hdma_sdadc1.Init.Direction = DMA_PERIPH_TO_MEMORY;
+ 361              		.loc 1 147 0
+ 362 0058 2E48     		ldr	r0, .L39+16
+ 363 005a 2F4B     		ldr	r3, .L39+20
+ 364 005c 0360     		str	r3, [r0]
+ 148:Src/sdadc.c   ****     hdma_sdadc1.Init.PeriphInc = DMA_PINC_DISABLE;
+ 365              		.loc 1 148 0
+ 366 005e 0023     		movs	r3, #0
+ 367 0060 4360     		str	r3, [r0, #4]
+ 149:Src/sdadc.c   ****     hdma_sdadc1.Init.MemInc = DMA_MINC_ENABLE;
+ 368              		.loc 1 149 0
+ 369 0062 8360     		str	r3, [r0, #8]
+ 150:Src/sdadc.c   ****     hdma_sdadc1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
+ 370              		.loc 1 150 0
+ 371 0064 8022     		movs	r2, #128
+ 372 0066 C260     		str	r2, [r0, #12]
+ 151:Src/sdadc.c   ****     hdma_sdadc1.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
+ 373              		.loc 1 151 0
+ 374 0068 4FF48072 		mov	r2, #256
+ 375 006c 0261     		str	r2, [r0, #16]
+ 152:Src/sdadc.c   ****     hdma_sdadc1.Init.Mode = DMA_NORMAL;
+ 376              		.loc 1 152 0
+ 377 006e 4FF48062 		mov	r2, #1024
+ 378 0072 4261     		str	r2, [r0, #20]
+ 153:Src/sdadc.c   ****     hdma_sdadc1.Init.Priority = DMA_PRIORITY_MEDIUM;
+ 379              		.loc 1 153 0
+ 380 0074 8361     		str	r3, [r0, #24]
+ 154:Src/sdadc.c   ****     if (HAL_DMA_Init(&hdma_sdadc1) != HAL_OK)
+ 381              		.loc 1 154 0
+ 382 0076 4FF48053 		mov	r3, #4096
+ 383 007a C361     		str	r3, [r0, #28]
+ 155:Src/sdadc.c   ****     {
+ 384              		.loc 1 155 0
+ 385 007c FFF7FEFF 		bl	HAL_DMA_Init
+ 386              	.LVL25:
+ 387 0080 18B9     		cbnz	r0, .L37
+ 388              	.L31:
+ 160:Src/sdadc.c   **** 
+ 389              		.loc 1 160 0
+ 390 0082 244B     		ldr	r3, .L39+16
+ 391 0084 6361     		str	r3, [r4, #20]
+ 392 0086 5C62     		str	r4, [r3, #36]
+ 393 0088 CAE7     		b	.L29
+ 394              	.L37:
+ 157:Src/sdadc.c   ****     }
+ 395              		.loc 1 157 0
+ 396 008a FFF7FEFF 		bl	Error_Handler
+ 397              	.LVL26:
+ 398 008e F8E7     		b	.L31
+ 399              	.LVL27:
+ 400              	.L36:
+ 401              	.LBB4:
+ARM GAS  C:\Users\acw\AppData\Local\Temp\cc56yJZN.s 			page 12
 
 
- 551              	.LVL30:
- 214:Src/sdadc.c   ****     {
- 552              		.loc 1 214 8 view .LVU171
- 553 00f2 18B9     		cbnz	r0, .L38
- 554              	.L33:
- 219:Src/sdadc.c   **** 
- 555              		.loc 1 219 5 is_stmt 1 view .LVU172
- 219:Src/sdadc.c   **** 
- 556              		.loc 1 219 5 view .LVU173
- 557 00f4 094B     		ldr	r3, .L39+24
- 558 00f6 6361     		str	r3, [r4, #20]
- 219:Src/sdadc.c   **** 
- 559              		.loc 1 219 5 view .LVU174
- 560 00f8 5C62     		str	r4, [r3, #36]
- 561              		.loc 1 225 1 is_stmt 0 view .LVU175
- 562 00fa 91E7     		b	.L29
- 563              	.L38:
- 216:Src/sdadc.c   ****     }
- 564              		.loc 1 216 7 is_stmt 1 view .LVU176
- 565 00fc FFF7FEFF 		bl	Error_Handler
- 566              	.LVL31:
- 567 0100 F8E7     		b	.L33
- 568              	.L40:
- 569 0102 00BF     		.align	2
- 570              	.L39:
- 571 0104 00600140 		.word	1073831936
- 572 0108 00680140 		.word	1073833984
- 573 010c 00100240 		.word	1073876992
- 574 0110 00040048 		.word	1207960576
- 575 0114 00000000 		.word	hdma_sdadc1
- 576 0118 30040240 		.word	1073873968
- 577 011c 00000000 		.word	hdma_sdadc3
- 578 0120 58040240 		.word	1073874008
- 579              		.cfi_endproc
- 580              	.LFE128:
- 582              		.section	.text.HAL_SDADC_MspDeInit,"ax",%progbits
- 583              		.align	1
- 584              		.global	HAL_SDADC_MspDeInit
- 585              		.syntax unified
- 586              		.thumb
- 587              		.thumb_func
- 588              		.fpu fpv4-sp-d16
- 590              	HAL_SDADC_MspDeInit:
- 591              	.LVL32:
- 592              	.LFB129:
- 226:Src/sdadc.c   **** 
- 227:Src/sdadc.c   **** void HAL_SDADC_MspDeInit(SDADC_HandleTypeDef* sdadcHandle)
- 228:Src/sdadc.c   **** {
- 593              		.loc 1 228 1 view -0
- 594              		.cfi_startproc
- 595              		@ args = 0, pretend = 0, frame = 0
- 596              		@ frame_needed = 0, uses_anonymous_args = 0
- 597              		.loc 1 228 1 is_stmt 0 view .LVU178
- 598 0000 10B5     		push	{r4, lr}
- 599              	.LCFI12:
- 600              		.cfi_def_cfa_offset 8
- 601              		.cfi_offset 4, -8
-ARM GAS  /tmp/cctB8SXg.s 			page 17
+ 172:Src/sdadc.c   ****   
+ 402              		.loc 1 172 0
+ 403 0090 1E4B     		ldr	r3, .L39+8
+ 404 0092 9A69     		ldr	r2, [r3, #24]
+ 405 0094 42F08062 		orr	r2, r2, #67108864
+ 406 0098 9A61     		str	r2, [r3, #24]
+ 407 009a 9A69     		ldr	r2, [r3, #24]
+ 408 009c 02F08062 		and	r2, r2, #67108864
+ 409 00a0 0392     		str	r2, [sp, #12]
+ 410 00a2 039A     		ldr	r2, [sp, #12]
+ 411              	.LBE4:
+ 412              	.LBB5:
+ 174:Src/sdadc.c   ****     /**SDADC3 GPIO Configuration    
+ 413              		.loc 1 174 0
+ 414 00a4 5A69     		ldr	r2, [r3, #20]
+ 415 00a6 42F48022 		orr	r2, r2, #262144
+ 416 00aa 5A61     		str	r2, [r3, #20]
+ 417 00ac 5B69     		ldr	r3, [r3, #20]
+ 418 00ae 03F48023 		and	r3, r3, #262144
+ 419 00b2 0493     		str	r3, [sp, #16]
+ 420 00b4 049B     		ldr	r3, [sp, #16]
+ 421              	.LBE5:
+ 179:Src/sdadc.c   ****     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+ 422              		.loc 1 179 0
+ 423 00b6 4FF44043 		mov	r3, #49152
+ 424 00ba 0593     		str	r3, [sp, #20]
+ 180:Src/sdadc.c   ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 425              		.loc 1 180 0
+ 426 00bc 0323     		movs	r3, #3
+ 427 00be 0693     		str	r3, [sp, #24]
+ 182:Src/sdadc.c   **** 
+ 428              		.loc 1 182 0
+ 429 00c0 05A9     		add	r1, sp, #20
+ 430 00c2 1348     		ldr	r0, .L39+12
+ 431              	.LVL28:
+ 432 00c4 FFF7FEFF 		bl	HAL_GPIO_Init
+ 433              	.LVL29:
+ 186:Src/sdadc.c   ****     hdma_sdadc3.Init.Direction = DMA_PERIPH_TO_MEMORY;
+ 434              		.loc 1 186 0
+ 435 00c8 1448     		ldr	r0, .L39+24
+ 436 00ca 154B     		ldr	r3, .L39+28
+ 437 00cc 0360     		str	r3, [r0]
+ 187:Src/sdadc.c   ****     hdma_sdadc3.Init.PeriphInc = DMA_PINC_DISABLE;
+ 438              		.loc 1 187 0
+ 439 00ce 0023     		movs	r3, #0
+ 440 00d0 4360     		str	r3, [r0, #4]
+ 188:Src/sdadc.c   ****     hdma_sdadc3.Init.MemInc = DMA_MINC_ENABLE;
+ 441              		.loc 1 188 0
+ 442 00d2 8360     		str	r3, [r0, #8]
+ 189:Src/sdadc.c   ****     hdma_sdadc3.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+ 443              		.loc 1 189 0
+ 444 00d4 8023     		movs	r3, #128
+ 445 00d6 C360     		str	r3, [r0, #12]
+ 190:Src/sdadc.c   ****     hdma_sdadc3.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
+ 446              		.loc 1 190 0
+ 447 00d8 4FF40073 		mov	r3, #512
+ 448 00dc 0361     		str	r3, [r0, #16]
+ARM GAS  C:\Users\acw\AppData\Local\Temp\cc56yJZN.s 			page 13
 
 
- 602              		.cfi_offset 14, -4
- 603 0002 0446     		mov	r4, r0
- 229:Src/sdadc.c   **** 
- 230:Src/sdadc.c   ****   if(sdadcHandle->Instance==SDADC1)
- 604              		.loc 1 230 3 is_stmt 1 view .LVU179
- 605              		.loc 1 230 17 is_stmt 0 view .LVU180
- 606 0004 0368     		ldr	r3, [r0]
- 607              		.loc 1 230 5 view .LVU181
- 608 0006 124A     		ldr	r2, .L47
- 609 0008 9342     		cmp	r3, r2
- 610 000a 03D0     		beq	.L45
+ 191:Src/sdadc.c   ****     hdma_sdadc3.Init.Mode = DMA_CIRCULAR;
+ 449              		.loc 1 191 0
+ 450 00de 4FF40063 		mov	r3, #2048
+ 451 00e2 4361     		str	r3, [r0, #20]
+ 192:Src/sdadc.c   ****     hdma_sdadc3.Init.Priority = DMA_PRIORITY_MEDIUM;
+ 452              		.loc 1 192 0
+ 453 00e4 2023     		movs	r3, #32
+ 454 00e6 8361     		str	r3, [r0, #24]
+ 193:Src/sdadc.c   ****     if (HAL_DMA_Init(&hdma_sdadc3) != HAL_OK)
+ 455              		.loc 1 193 0
+ 456 00e8 4FF48053 		mov	r3, #4096
+ 457 00ec C361     		str	r3, [r0, #28]
+ 194:Src/sdadc.c   ****     {
+ 458              		.loc 1 194 0
+ 459 00ee FFF7FEFF 		bl	HAL_DMA_Init
+ 460              	.LVL30:
+ 461 00f2 18B9     		cbnz	r0, .L38
+ 462              	.L33:
+ 199:Src/sdadc.c   **** 
+ 463              		.loc 1 199 0
+ 464 00f4 094B     		ldr	r3, .L39+24
+ 465 00f6 6361     		str	r3, [r4, #20]
+ 466 00f8 5C62     		str	r4, [r3, #36]
+ 467              		.loc 1 205 0
+ 468 00fa 91E7     		b	.L29
+ 469              	.L38:
+ 196:Src/sdadc.c   ****     }
+ 470              		.loc 1 196 0
+ 471 00fc FFF7FEFF 		bl	Error_Handler
+ 472              	.LVL31:
+ 473 0100 F8E7     		b	.L33
+ 474              	.L40:
+ 475 0102 00BF     		.align	2
+ 476              	.L39:
+ 477 0104 00600140 		.word	1073831936
+ 478 0108 00680140 		.word	1073833984
+ 479 010c 00100240 		.word	1073876992
+ 480 0110 00040048 		.word	1207960576
+ 481 0114 00000000 		.word	hdma_sdadc1
+ 482 0118 30040240 		.word	1073873968
+ 483 011c 00000000 		.word	hdma_sdadc3
+ 484 0120 58040240 		.word	1073874008
+ 485              		.cfi_endproc
+ 486              	.LFE128:
+ 488              		.section	.text.HAL_SDADC_MspDeInit,"ax",%progbits
+ 489              		.align	1
+ 490              		.global	HAL_SDADC_MspDeInit
+ 491              		.syntax unified
+ 492              		.thumb
+ 493              		.thumb_func
+ 494              		.fpu fpv4-sp-d16
+ 496              	HAL_SDADC_MspDeInit:
+ 497              	.LFB129:
+ 206:Src/sdadc.c   **** 
+ 207:Src/sdadc.c   **** void HAL_SDADC_MspDeInit(SDADC_HandleTypeDef* sdadcHandle)
+ 208:Src/sdadc.c   **** {
+ 498              		.loc 1 208 0
+ARM GAS  C:\Users\acw\AppData\Local\Temp\cc56yJZN.s 			page 14
+
+
+ 499              		.cfi_startproc
+ 500              		@ args = 0, pretend = 0, frame = 0
+ 501              		@ frame_needed = 0, uses_anonymous_args = 0
+ 502              	.LVL32:
+ 503 0000 10B5     		push	{r4, lr}
+ 504              	.LCFI12:
+ 505              		.cfi_def_cfa_offset 8
+ 506              		.cfi_offset 4, -8
+ 507              		.cfi_offset 14, -4
+ 508 0002 0446     		mov	r4, r0
+ 209:Src/sdadc.c   **** 
+ 210:Src/sdadc.c   ****   if(sdadcHandle->Instance==SDADC1)
+ 509              		.loc 1 210 0
+ 510 0004 0368     		ldr	r3, [r0]
+ 511 0006 124A     		ldr	r2, .L47
+ 512 0008 9342     		cmp	r3, r2
+ 513 000a 03D0     		beq	.L45
+ 211:Src/sdadc.c   ****   {
+ 212:Src/sdadc.c   ****   /* USER CODE BEGIN SDADC1_MspDeInit 0 */
+ 213:Src/sdadc.c   **** 
+ 214:Src/sdadc.c   ****   /* USER CODE END SDADC1_MspDeInit 0 */
+ 215:Src/sdadc.c   ****     /* Peripheral clock disable */
+ 216:Src/sdadc.c   ****     __HAL_RCC_SDADC1_CLK_DISABLE();
+ 217:Src/sdadc.c   ****   
+ 218:Src/sdadc.c   ****     /**SDADC1 GPIO Configuration    
+ 219:Src/sdadc.c   ****     PB0     ------> SDADC1_AIN6P
+ 220:Src/sdadc.c   ****     PB1     ------> SDADC1_AIN6M 
+ 221:Src/sdadc.c   ****     */
+ 222:Src/sdadc.c   ****     HAL_GPIO_DeInit(GPIOB, GPIO_PIN_0|GPIO_PIN_1);
+ 223:Src/sdadc.c   **** 
+ 224:Src/sdadc.c   ****     /* SDADC1 DMA DeInit */
+ 225:Src/sdadc.c   ****     HAL_DMA_DeInit(sdadcHandle->hdma);
+ 226:Src/sdadc.c   ****   /* USER CODE BEGIN SDADC1_MspDeInit 1 */
+ 227:Src/sdadc.c   **** 
+ 228:Src/sdadc.c   ****   /* USER CODE END SDADC1_MspDeInit 1 */
+ 229:Src/sdadc.c   ****   }
+ 230:Src/sdadc.c   ****   else if(sdadcHandle->Instance==SDADC3)
+ 514              		.loc 1 230 0
+ 515 000c 114A     		ldr	r2, .L47+4
+ 516 000e 9342     		cmp	r3, r2
+ 517 0010 0ED0     		beq	.L46
+ 518              	.LVL33:
+ 519              	.L41:
  231:Src/sdadc.c   ****   {
- 232:Src/sdadc.c   ****   /* USER CODE BEGIN SDADC1_MspDeInit 0 */
+ 232:Src/sdadc.c   ****   /* USER CODE BEGIN SDADC3_MspDeInit 0 */
  233:Src/sdadc.c   **** 
- 234:Src/sdadc.c   ****   /* USER CODE END SDADC1_MspDeInit 0 */
+ 234:Src/sdadc.c   ****   /* USER CODE END SDADC3_MspDeInit 0 */
  235:Src/sdadc.c   ****     /* Peripheral clock disable */
- 236:Src/sdadc.c   ****     __HAL_RCC_SDADC1_CLK_DISABLE();
+ 236:Src/sdadc.c   ****     __HAL_RCC_SDADC3_CLK_DISABLE();
  237:Src/sdadc.c   ****   
- 238:Src/sdadc.c   ****     /**SDADC1 GPIO Configuration    
- 239:Src/sdadc.c   ****     PB0     ------> SDADC1_AIN6P
- 240:Src/sdadc.c   ****     PB1     ------> SDADC1_AIN6M 
+ 238:Src/sdadc.c   ****     /**SDADC3 GPIO Configuration    
+ 239:Src/sdadc.c   ****     PB14     ------> SDADC3_AIN8P
+ 240:Src/sdadc.c   ****     PB15     ------> SDADC3_AIN8M 
  241:Src/sdadc.c   ****     */
- 242:Src/sdadc.c   ****     HAL_GPIO_DeInit(GPIOB, GPIO_PIN_0|GPIO_PIN_1);
+ 242:Src/sdadc.c   ****     HAL_GPIO_DeInit(GPIOB, GPIO_PIN_14|GPIO_PIN_15);
  243:Src/sdadc.c   **** 
- 244:Src/sdadc.c   ****     /* SDADC1 DMA DeInit */
+ 244:Src/sdadc.c   ****     /* SDADC3 DMA DeInit */
+ARM GAS  C:\Users\acw\AppData\Local\Temp\cc56yJZN.s 			page 15
+
+
  245:Src/sdadc.c   ****     HAL_DMA_DeInit(sdadcHandle->hdma);
- 246:Src/sdadc.c   ****   /* USER CODE BEGIN SDADC1_MspDeInit 1 */
+ 246:Src/sdadc.c   ****   /* USER CODE BEGIN SDADC3_MspDeInit 1 */
  247:Src/sdadc.c   **** 
- 248:Src/sdadc.c   ****   /* USER CODE END SDADC1_MspDeInit 1 */
+ 248:Src/sdadc.c   ****   /* USER CODE END SDADC3_MspDeInit 1 */
  249:Src/sdadc.c   ****   }
- 250:Src/sdadc.c   ****   else if(sdadcHandle->Instance==SDADC3)
- 611              		.loc 1 250 8 is_stmt 1 view .LVU182
- 612              		.loc 1 250 10 is_stmt 0 view .LVU183
- 613 000c 114A     		ldr	r2, .L47+4
- 614 000e 9342     		cmp	r3, r2
- 615 0010 0ED0     		beq	.L46
- 616              	.LVL33:
- 617              	.L41:
- 251:Src/sdadc.c   ****   {
- 252:Src/sdadc.c   ****   /* USER CODE BEGIN SDADC3_MspDeInit 0 */
- 253:Src/sdadc.c   **** 
- 254:Src/sdadc.c   ****   /* USER CODE END SDADC3_MspDeInit 0 */
- 255:Src/sdadc.c   ****     /* Peripheral clock disable */
- 256:Src/sdadc.c   ****     __HAL_RCC_SDADC3_CLK_DISABLE();
- 257:Src/sdadc.c   ****   
- 258:Src/sdadc.c   ****     /**SDADC3 GPIO Configuration    
- 259:Src/sdadc.c   ****     PB14     ------> SDADC3_AIN8P
- 260:Src/sdadc.c   ****     PB15     ------> SDADC3_AIN8M 
- 261:Src/sdadc.c   ****     */
- 262:Src/sdadc.c   ****     HAL_GPIO_DeInit(GPIOB, GPIO_PIN_14|GPIO_PIN_15);
- 263:Src/sdadc.c   **** 
- 264:Src/sdadc.c   ****     /* SDADC3 DMA DeInit */
- 265:Src/sdadc.c   ****     HAL_DMA_DeInit(sdadcHandle->hdma);
- 266:Src/sdadc.c   ****   /* USER CODE BEGIN SDADC3_MspDeInit 1 */
- 267:Src/sdadc.c   **** 
- 268:Src/sdadc.c   ****   /* USER CODE END SDADC3_MspDeInit 1 */
- 269:Src/sdadc.c   ****   }
-ARM GAS  /tmp/cctB8SXg.s 			page 18
-
-
- 270:Src/sdadc.c   **** } 
- 618              		.loc 1 270 1 view .LVU184
- 619 0012 10BD     		pop	{r4, pc}
- 620              	.LVL34:
- 621              	.L45:
+ 250:Src/sdadc.c   **** } 
+ 520              		.loc 1 250 0
+ 521 0012 10BD     		pop	{r4, pc}
+ 522              	.LVL34:
+ 523              	.L45:
+ 216:Src/sdadc.c   ****   
+ 524              		.loc 1 216 0
+ 525 0014 02F53042 		add	r2, r2, #45056
+ 526 0018 9369     		ldr	r3, [r2, #24]
+ 527 001a 23F08073 		bic	r3, r3, #16777216
+ 528 001e 9361     		str	r3, [r2, #24]
+ 222:Src/sdadc.c   **** 
+ 529              		.loc 1 222 0
+ 530 0020 0321     		movs	r1, #3
+ 531 0022 0D48     		ldr	r0, .L47+8
+ 532              	.LVL35:
+ 533 0024 FFF7FEFF 		bl	HAL_GPIO_DeInit
+ 534              	.LVL36:
+ 225:Src/sdadc.c   ****   /* USER CODE BEGIN SDADC1_MspDeInit 1 */
+ 535              		.loc 1 225 0
+ 536 0028 6069     		ldr	r0, [r4, #20]
+ 537 002a FFF7FEFF 		bl	HAL_DMA_DeInit
+ 538              	.LVL37:
+ 539 002e F0E7     		b	.L41
+ 540              	.LVL38:
+ 541              	.L46:
  236:Src/sdadc.c   ****   
- 622              		.loc 1 236 5 is_stmt 1 view .LVU185
- 623 0014 02F53042 		add	r2, r2, #45056
- 624 0018 9369     		ldr	r3, [r2, #24]
- 625 001a 23F08073 		bic	r3, r3, #16777216
- 626 001e 9361     		str	r3, [r2, #24]
+ 542              		.loc 1 236 0
+ 543 0030 02F52842 		add	r2, r2, #43008
+ 544 0034 9369     		ldr	r3, [r2, #24]
+ 545 0036 23F08063 		bic	r3, r3, #67108864
+ 546 003a 9361     		str	r3, [r2, #24]
  242:Src/sdadc.c   **** 
- 627              		.loc 1 242 5 view .LVU186
- 628 0020 0321     		movs	r1, #3
- 629 0022 0D48     		ldr	r0, .L47+8
- 630              	.LVL35:
- 242:Src/sdadc.c   **** 
- 631              		.loc 1 242 5 is_stmt 0 view .LVU187
- 632 0024 FFF7FEFF 		bl	HAL_GPIO_DeInit
- 633              	.LVL36:
- 245:Src/sdadc.c   ****   /* USER CODE BEGIN SDADC1_MspDeInit 1 */
- 634              		.loc 1 245 5 is_stmt 1 view .LVU188
- 635 0028 6069     		ldr	r0, [r4, #20]
- 636 002a FFF7FEFF 		bl	HAL_DMA_DeInit
- 637              	.LVL37:
- 638 002e F0E7     		b	.L41
- 639              	.LVL38:
- 640              	.L46:
- 256:Src/sdadc.c   ****   
- 641              		.loc 1 256 5 view .LVU189
- 642 0030 02F52842 		add	r2, r2, #43008
- 643 0034 9369     		ldr	r3, [r2, #24]
- 644 0036 23F08063 		bic	r3, r3, #67108864
- 645 003a 9361     		str	r3, [r2, #24]
- 262:Src/sdadc.c   **** 
- 646              		.loc 1 262 5 view .LVU190
- 647 003c 4FF44041 		mov	r1, #49152
- 648 0040 0548     		ldr	r0, .L47+8
- 649              	.LVL39:
- 262:Src/sdadc.c   **** 
- 650              		.loc 1 262 5 is_stmt 0 view .LVU191
- 651 0042 FFF7FEFF 		bl	HAL_GPIO_DeInit
- 652              	.LVL40:
- 265:Src/sdadc.c   ****   /* USER CODE BEGIN SDADC3_MspDeInit 1 */
- 653              		.loc 1 265 5 is_stmt 1 view .LVU192
- 654 0046 6069     		ldr	r0, [r4, #20]
- 655 0048 FFF7FEFF 		bl	HAL_DMA_DeInit
- 656              	.LVL41:
- 657              		.loc 1 270 1 is_stmt 0 view .LVU193
- 658 004c E1E7     		b	.L41
- 659              	.L48:
- 660 004e 00BF     		.align	2
- 661              	.L47:
- 662 0050 00600140 		.word	1073831936
- 663 0054 00680140 		.word	1073833984
- 664 0058 00040048 		.word	1207960576
- 665              		.cfi_endproc
-ARM GAS  /tmp/cctB8SXg.s 			page 19
+ 547              		.loc 1 242 0
+ 548 003c 4FF44041 		mov	r1, #49152
+ 549 0040 0548     		ldr	r0, .L47+8
+ 550              	.LVL39:
+ 551 0042 FFF7FEFF 		bl	HAL_GPIO_DeInit
+ 552              	.LVL40:
+ 245:Src/sdadc.c   ****   /* USER CODE BEGIN SDADC3_MspDeInit 1 */
+ 553              		.loc 1 245 0
+ 554 0046 6069     		ldr	r0, [r4, #20]
+ 555 0048 FFF7FEFF 		bl	HAL_DMA_DeInit
+ 556              	.LVL41:
+ 557              		.loc 1 250 0
+ 558 004c E1E7     		b	.L41
+ 559              	.L48:
+ 560 004e 00BF     		.align	2
+ 561              	.L47:
+ 562 0050 00600140 		.word	1073831936
+ 563 0054 00680140 		.word	1073833984
+ 564 0058 00040048 		.word	1207960576
+ARM GAS  C:\Users\acw\AppData\Local\Temp\cc56yJZN.s 			page 16
 
 
- 666              	.LFE129:
- 668              		.comm	hdma_sdadc3,68,4
- 669              		.comm	hdma_sdadc1,68,4
- 670              		.comm	hsdadc3,68,4
- 671              		.comm	hsdadc1,68,4
- 672              		.text
- 673              	.Letext0:
- 674              		.file 2 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/machine/_default_t
- 675              		.file 3 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/sys/_stdint.h"
- 676              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
- 677              		.file 5 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/system_stm32f3xx.h"
- 678              		.file 6 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f373xc.h"
- 679              		.file 7 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/sys/lock.h"
- 680              		.file 8 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/sys/_types.h"
- 681              		.file 9 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/lib/gcc/arm-none-eabi/8.2.1/include/stdd
- 682              		.file 10 "/home/alex/opt/gcc-arm-none-eabi-8-2018-q4-major/arm-none-eabi/include/sys/reent.h"
- 683              		.file 11 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_def.h"
- 684              		.file 12 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_gpio.h"
- 685              		.file 13 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_dma.h"
- 686              		.file 14 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_sdadc.h"
- 687              		.file 15 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h"
- 688              		.file 16 "Inc/sdadc.h"
- 689              		.file 17 "Inc/main.h"
-ARM GAS  /tmp/cctB8SXg.s 			page 20
+ 565              		.cfi_endproc
+ 566              	.LFE129:
+ 568              		.comm	hdma_sdadc3,68,4
+ 569              		.comm	hdma_sdadc1,68,4
+ 570              		.comm	hsdadc3,68,4
+ 571              		.comm	hsdadc1,68,4
+ 572              		.text
+ 573              	.Letext0:
+ 574              		.file 2 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include
+ 575              		.file 3 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include
+ 576              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
+ 577              		.file 5 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/system_stm32f3xx.h"
+ 578              		.file 6 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f373xc.h"
+ 579              		.file 7 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include
+ 580              		.file 8 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\include
+ 581              		.file 9 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\lib\\gcc\\arm-none-eab
+ 582              		.file 10 "c:\\program files (x86)\\gnu tools arm embedded\\7 2018-q2-update\\arm-none-eabi\\includ
+ 583              		.file 11 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_def.h"
+ 584              		.file 12 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_gpio.h"
+ 585              		.file 13 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_dma.h"
+ 586              		.file 14 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_sdadc.h"
+ 587              		.file 15 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h"
+ 588              		.file 16 "Inc/sdadc.h"
+ 589              		.file 17 "Inc/main.h"
+ARM GAS  C:\Users\acw\AppData\Local\Temp\cc56yJZN.s 			page 17
 
 
 DEFINED SYMBOLS
-                            *ABS*:0000000000000000 sdadc.c
-     /tmp/cctB8SXg.s:18     .text.MX_SDADC1_Init:0000000000000000 $t
-     /tmp/cctB8SXg.s:26     .text.MX_SDADC1_Init:0000000000000000 MX_SDADC1_Init
-     /tmp/cctB8SXg.s:162    .text.MX_SDADC1_Init:0000000000000084 $d
-                            *COM*:0000000000000044 hsdadc1
-     /tmp/cctB8SXg.s:169    .text.MX_SDADC3_Init:0000000000000000 $t
-     /tmp/cctB8SXg.s:176    .text.MX_SDADC3_Init:0000000000000000 MX_SDADC3_Init
-     /tmp/cctB8SXg.s:311    .text.MX_SDADC3_Init:0000000000000084 $d
-                            *COM*:0000000000000044 hsdadc3
-     /tmp/cctB8SXg.s:318    .text.HAL_SDADC_MspInit:0000000000000000 $t
-     /tmp/cctB8SXg.s:325    .text.HAL_SDADC_MspInit:0000000000000000 HAL_SDADC_MspInit
-     /tmp/cctB8SXg.s:571    .text.HAL_SDADC_MspInit:0000000000000104 $d
-                            *COM*:0000000000000044 hdma_sdadc1
-                            *COM*:0000000000000044 hdma_sdadc3
-     /tmp/cctB8SXg.s:583    .text.HAL_SDADC_MspDeInit:0000000000000000 $t
-     /tmp/cctB8SXg.s:590    .text.HAL_SDADC_MspDeInit:0000000000000000 HAL_SDADC_MspDeInit
-     /tmp/cctB8SXg.s:662    .text.HAL_SDADC_MspDeInit:0000000000000050 $d
+                            *ABS*:00000000 sdadc.c
+C:\Users\acw\AppData\Local\Temp\cc56yJZN.s:18     .text.MX_SDADC1_Init:00000000 $t
+C:\Users\acw\AppData\Local\Temp\cc56yJZN.s:25     .text.MX_SDADC1_Init:00000000 MX_SDADC1_Init
+C:\Users\acw\AppData\Local\Temp\cc56yJZN.s:141    .text.MX_SDADC1_Init:00000084 $d
+                            *COM*:00000044 hsdadc1
+C:\Users\acw\AppData\Local\Temp\cc56yJZN.s:148    .text.MX_SDADC3_Init:00000000 $t
+C:\Users\acw\AppData\Local\Temp\cc56yJZN.s:155    .text.MX_SDADC3_Init:00000000 MX_SDADC3_Init
+C:\Users\acw\AppData\Local\Temp\cc56yJZN.s:270    .text.MX_SDADC3_Init:00000084 $d
+                            *COM*:00000044 hsdadc3
+C:\Users\acw\AppData\Local\Temp\cc56yJZN.s:277    .text.HAL_SDADC_MspInit:00000000 $t
+C:\Users\acw\AppData\Local\Temp\cc56yJZN.s:284    .text.HAL_SDADC_MspInit:00000000 HAL_SDADC_MspInit
+C:\Users\acw\AppData\Local\Temp\cc56yJZN.s:477    .text.HAL_SDADC_MspInit:00000104 $d
+                            *COM*:00000044 hdma_sdadc1
+                            *COM*:00000044 hdma_sdadc3
+C:\Users\acw\AppData\Local\Temp\cc56yJZN.s:489    .text.HAL_SDADC_MspDeInit:00000000 $t
+C:\Users\acw\AppData\Local\Temp\cc56yJZN.s:496    .text.HAL_SDADC_MspDeInit:00000000 HAL_SDADC_MspDeInit
+C:\Users\acw\AppData\Local\Temp\cc56yJZN.s:562    .text.HAL_SDADC_MspDeInit:00000050 $d
 
 UNDEFINED SYMBOLS
 HAL_SDADC_Init
