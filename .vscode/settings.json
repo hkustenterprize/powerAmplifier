@@ -3,6 +3,7 @@
     "C_Cpp.dimInactiveRegions": false,
     "files.associations": {
         "can.h": "c",
-        "sdadc.h": "c"
+        "sdadc.h": "c",
+        "array": "c"
     }
 }

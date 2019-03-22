@@ -1,4 +1,4 @@
 build
 debug.jdebug.user
 .vscode/*
-Inc/Backup
+*.bak
