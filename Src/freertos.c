@@ -25,7 +25,7 @@
 #include "cmsis_os.h"
 
 /* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */     
+/* USER CODE BEGIN Includes */
 #include "can.h"
 #include "sampling.h"
 /* USER CODE END Includes */
@@ -56,7 +56,7 @@ osThreadId defaultTaskHandle;
 
 /* USER CODE END FunctionPrototypes */
 
-void StartDefaultTask(void const * argument);
+void StartDefaultTask(void const *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -65,7 +65,8 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
   * @param  None
   * @retval None
   */
-void MX_FREERTOS_Init(void) {
+void MX_FREERTOS_Init(void)
+{
   /* USER CODE BEGIN Init */
 
   /* USER CODE END Init */
@@ -94,7 +95,6 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
-
 }
 
 /* USER CODE BEGIN Header_StartDefaultTask */
@@ -104,26 +104,15 @@ void MX_FREERTOS_Init(void) {
   * @retval None
   */
 /* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void const * argument)
+void StartDefaultTask(void const *argument)
 {
 
   /* USER CODE BEGIN StartDefaultTask */
-  HAL_CAN_Start(&hcan);
   /* Infinite loop */
   while (1)
   {
-    CAN_TxHeaderTypeDef pHeader;
-    pHeader.StdId = 0x301;
-    // pHeader.ExtId =
-    pHeader.IDE = CAN_ID_STD;
-    pHeader.RTR = CAN_RTR_DATA;
-    pHeader.DLC = 4;
-    pHeader.TransmitGlobalTime = DISABLE;
-
-    uint32_t mailbox;
-    HAL_CAN_AddTxMessage(&hcan, &pHeader, &currentAvg, &mailbox);
     HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-    osDelay(5);
+    osDelay(100);
   }
   /* USER CODE END StartDefaultTask */
 }

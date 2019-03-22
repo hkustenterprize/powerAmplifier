@@ -45,8 +45,6 @@
 #include "dac.h"
 #include "dma.h"
 #include "sdadc.h"
-#include "spi.h"
-#include "usb.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -120,9 +118,8 @@ int main(void)
   MX_SDADC1_Init();
   MX_DAC1_Init();
   MX_CAN_Init();
-  MX_SPI2_Init();
-  MX_USB_PCD_Init();
   /* USER CODE BEGIN 2 */
+  HAL_CAN_Start(&hcan);
   SamplingStart();
   /* USER CODE END 2 */
 
@@ -182,8 +179,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USB|RCC_PERIPHCLK_SDADC;
-  PeriphClkInit.USBClockSelection = RCC_USBCLKSOURCE_PLL_DIV1_5;
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_SDADC;
   PeriphClkInit.SdadcClockSelection = RCC_SDADCSYSCLK_DIV12;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
