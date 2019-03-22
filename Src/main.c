@@ -131,7 +131,7 @@ int main(void)
 
   /* Start scheduler */
   osKernelStart();
-
+  
   /* We should never get here as control is now taken by the scheduler */
 
   /* Infinite loop */
@@ -139,9 +139,9 @@ int main(void)
   while (1)
   {
   }
-  /* USER CODE END WHILE */
+    /* USER CODE END WHILE */
 
-  /* USER CODE BEGIN 3 */
+    /* USER CODE BEGIN 3 */
   // HAL_CAN_GetRxMessage(hcan, )
   /* USER CODE END 3 */
 }
@@ -171,7 +171,8 @@ void SystemClock_Config(void)
   }
   /** Initializes the CPU, AHB and APB busses clocks 
   */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
@@ -181,7 +182,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USB | RCC_PERIPHCLK_SDADC;
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USB|RCC_PERIPHCLK_SDADC;
   PeriphClkInit.USBClockSelection = RCC_USBCLKSOURCE_PLL_DIV1_5;
   PeriphClkInit.SdadcClockSelection = RCC_SDADCSYSCLK_DIV12;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
@@ -209,8 +210,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE BEGIN Callback 0 */
 
   /* USER CODE END Callback 0 */
-  if (htim->Instance == TIM19)
-  {
+  if (htim->Instance == TIM19) {
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
@@ -230,7 +230,7 @@ void Error_Handler(void)
   /* USER CODE END Error_Handler_Debug */
 }
 
-#ifdef USE_FULL_ASSERT
+#ifdef  USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.
@@ -239,7 +239,7 @@ void Error_Handler(void)
   * @retval None
   */
 void assert_failed(char *file, uint32_t line)
-{
+{ 
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */

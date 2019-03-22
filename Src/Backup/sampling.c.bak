@@ -5,34 +5,20 @@
 #include "sdadc.h"
 #include "gpio.h"
 #include "sampling.h"
+#include "stm32f3xx_hal.h"
 
-uint16_t dacSample = 1125;
+uint16_t dacValue = 1125;
 uint32_t currentSamples[CURRENT_SAMPLE_AMOUNT];
 int32_t currentSum = 0;
 float currentAvg = 0;
 
-void samplingInit(void)
+void SamplingStart(void)
 {
     HAL_DAC_Start(&hdac1, DAC_CHANNEL_1);
-    HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, (uint32_t)dacSample);
+    HAL_DAC_SetValue(&hdac1, DAC_CHANNEL_1, DAC_ALIGN_12B_R, (uint32_t)dacValue);
     HAL_SDADC_CalibrationStart(&hsdadc3, SDADC_CALIBRATION_SEQ_1);
     HAL_SDADC_PollForCalibEvent(&hsdadc3, HAL_MAX_DELAY);
     HAL_SDADC_Start_DMA(&hsdadc3, currentSamples, CURRENT_SAMPLE_AMOUNT);
-    HAL_CAN_Start(&hcan);
-    while (1)
-    {
-        CAN_TxHeaderTypeDef pHeader;
-        pHeader.StdId = 0x301;
-        // pHeader.ExtId =
-        pHeader.IDE = CAN_ID_STD;
-        pHeader.RTR = CAN_RTR_DATA;
-        pHeader.DLC = 4;
-        pHeader.TransmitGlobalTime = DISABLE;
-
-        uint32_t mailbox;
-        HAL_CAN_AddTxMessage(&hcan, &pHeader, &currentAvg, &mailbox);
-        // HAL_Delay(10);
-    }
 }
 
 void HAL_SDADC_ConvCpltCallback(SDADC_HandleTypeDef *hsdadc)
