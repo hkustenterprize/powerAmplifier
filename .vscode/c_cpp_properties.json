@@ -1,22 +1,20 @@
 {
     "configurations": [
         {
-            "name": "WSL",
-            "intelliSenseMode": "gcc-x64",
-            "compilerPath": "arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16",
+            "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/Drivers/STM32F3xx_HAL_Driver/Inc",
+                "${workspaceFolder}/Inc",
+                "${workspaceFolder}/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS",
+                "${workspaceFolder}/Drivers/CMSIS/Device/ST/STM32F3xx/Include",
+                "${workspaceFolder}/Middlewares/Third_Party/FreeRTOS/Source/include",
+                "${workspaceFolder}/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F"
             ],
-            "defines": ["STM32F373xC"],
-            "browse": {
-                "path": [
-                    "${workspaceFolder}/**"
-                ],
-                "limitSymbolsToIncludedHeaders": true,
-                "databaseFilename": ""
-            },
+            "defines": ["CAN"],
+            "compilerPath": "/usr/bin/arm-none-eabi-gcc",
             "cStandard": "c11",
-            "cppStandard": "c++17"
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-x64"
         }
     ],
     "version": 4
